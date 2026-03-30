@@ -41,6 +41,7 @@
 - 文档交付可用
 - 标准 skill payload 调用链路可用
 - 图片 / 视频 workflow 契约可用
+- OpenClaw 的 GitHub 下载与 ClawHub 首发分发已完成
 
 当前尚未完全达到：
 
@@ -55,6 +56,7 @@
 - Skill 仓：
   - `python -m py_compile ...`
   - 新 skill 子路径中的 `python scripts/jmcai_skill.py --version`
+  - `clawhub publish` 首发成功：`comfypet-jmcai-skill@1.0.0`
 
 ## 当前阻塞
 
@@ -66,12 +68,14 @@
 - Claude Code：
   - 本机未安装可直接调用的客户端命令
 - OpenClaw：
-  - 本机未安装可直接调用的客户端命令
+  - 已完成 ClawHub 首发发布
+  - 但本机仍未安装可直接调用的 OpenClaw 客户端命令
 
 这意味着：
 
 - 可以证明 skill 包本身可用
 - 也可以证明桥接与 workflow 调用链路可用
+- 也可以证明 OpenClaw 官方注册表分发链路已打通
 - 但还不能单凭这台机器，对外宣称“三端客户端级最终联调全部完成”
 
 ## 正式对外宣称“已完成”的条件
@@ -93,6 +97,7 @@
 如果现在要对外描述，建议使用：
 
 - “JMCAI Comfypet Skill Pack 已完成代码交付、安装脚本、文档、图片/视频 workflow 调用链路和本地 smoke 验证。”
+- “JMCAI Comfypet Skill Pack 已完成 OpenClaw ClawHub 首发发布。”
 - “三端客户端级最终联调仍需在已安装对应客户端的 Windows 环境中完成最后验收。”
 
 不建议直接说：

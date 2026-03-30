@@ -48,7 +48,8 @@
 - 当前支持两条正式路径：
   - GitHub 下载后本地安装
   - ClawHub 注册表发布与安装
-- 如果希望用户在 OpenClaw 生态里“官方可发现”，需要额外走 ClawHub。
+- `comfypet-jmcai-skill@1.0.0` 已在 ClawHub 首发发布。
+- 如果刚发布后短时间不可见，通常是 ClawHub 安全扫描仍在进行中。
 
 ## 推荐分发产物
 
@@ -69,7 +70,7 @@
 3. 再按目标平台文档执行：
    - OpenAI / Codex：上传 payload 到 Skills 页面
    - Claude Code：个人级、项目级或团队 Git 分发
-   - OpenClaw：执行 ClawHub dry-run / publish
+   - OpenClaw：必要时执行 ClawHub dry-run / 后续版本 publish
 
 ## 当前仓库已具备
 
@@ -84,4 +85,4 @@
 - 不自动替你登录 Claude Code
 - 不自动替你把 skill 发布到 ClawHub
 
-这些动作仍依赖对应平台账号或本机客户端环境，但本仓已经准备到“可直接执行”的状态。
+这些动作仍依赖对应平台账号或本机客户端环境；其中 OpenClaw 的首发 ClawHub 发布已经完成，其余平台动作仍按各自环境执行。

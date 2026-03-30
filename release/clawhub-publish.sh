@@ -37,7 +37,7 @@ echo "Dry-run preview:"
 echo "clawhub sync --root \"${skills_root}\" --dry-run --tags \"${tags}\" --changelog \"${changelog}\""
 echo
 echo "Publish single skill:"
-echo "clawhub skill publish \"${payload_root}\" --slug \"${slug}\" --name \"${display_name}\" --version \"${version}\" --tags \"${tags}\" --changelog \"${changelog}\""
+echo "clawhub publish \"${payload_root}\" --slug \"${slug}\" --name \"${display_name}\" --version \"${version}\" --tags \"${tags}\" --changelog \"${changelog}\""
 echo
 echo "Sync all local skills:"
 echo "clawhub sync --root \"${skills_root}\" --all --tags \"${tags}\" --changelog \"${changelog}\" --bump patch"

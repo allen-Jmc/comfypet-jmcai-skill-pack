@@ -38,6 +38,12 @@ openclaw skills install comfypet-jmcai-skill
 
 进行安装。
 
+## 当前发布状态
+
+- ClawHub 首发版本：`comfypet-jmcai-skill@1.0.0`
+- 发布结果：已完成首发 publish
+- 若 `clawhub inspect comfypet-jmcai-skill` 短时间返回“hidden while security scan is pending”，表示平台安全扫描尚未结束，等待几分钟后重试即可。
+
 ## 固定发布参数
 
 - `slug`: `comfypet-jmcai-skill`
@@ -57,7 +63,7 @@ pwsh -File .\release\clawhub-publish.ps1 -RunDryRun
 ### 发布单个 skill
 
 ```bash
-clawhub skill publish ./skills/comfypet-jmcai-skill --slug comfypet-jmcai-skill --name "JMCAI Comfypet" --version 1.0.0 --tags latest,comfyui,image,video,jmcai --changelog "Initial public release"
+clawhub publish ./skills/comfypet-jmcai-skill --slug comfypet-jmcai-skill --name "JMCAI Comfypet" --version 1.0.0 --tags latest,comfyui,image,video,jmcai --changelog "Initial public release"
 ```
 
 ### 扫描并同步 skills 目录
@@ -71,12 +77,14 @@ clawhub sync --root ./skills --all --tags latest,comfyui,image,video,jmcai --cha
 - `SKILL.md` 已包含 `metadata.openclaw`
 - GitHub 仓已公开
 - 分发脚本已准备好 dry-run 与命令模板
+- ClawHub 首发版本已发布
 
 ## 当前仍依赖外部环境的步骤
 
-- 安装 `clawhub` CLI
-- `clawhub login`
-- 实际执行 publish 或 sync
+- 后续版本发布仍需要：
+  - 安装 `clawhub` CLI
+  - `clawhub login`
+  - 实际执行 publish 或 sync
 
 ## 验证建议
 
@@ -96,5 +104,5 @@ clawhub install comfypet-jmcai-skill
 
 ## 对外口径
 
-- “当前 OpenClaw 路线支持 GitHub 安装，且已准备好 ClawHub 发布元数据与命令模板”
-- “实际 ClawHub 上架仍依赖维护者本机具备 `clawhub` CLI 与登录环境”
+- “当前 OpenClaw 路线支持 GitHub 安装，且 `comfypet-jmcai-skill@1.0.0` 已发布到 ClawHub。”
+- “如果刚发布后短时间内尚不可见，通常是平台安全扫描未完成，可稍后再次安装或 inspect。”

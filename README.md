@@ -66,7 +66,7 @@ https://github.com/allen-Jmc/comfypet-jmcai-skill-pack/tree/main/skills/comfypet
 
 - OpenAI / Codex：GitHub 分发 + ChatGPT Skills 页面上传 / 工作区分享
 - Claude Code：GitHub 分发 + 官方 skills 目录安装 / 项目级共享
-- OpenClaw：GitHub 分发 + ClawHub 发布就绪
+- OpenClaw：GitHub 分发 + ClawHub 已发布
 
 发布者若要生成正式分发产物，请在仓库根目录执行：
 
@@ -94,6 +94,9 @@ pwsh -File .\release\build-distribution.ps1
 - [OpenAI / Codex 分发](./docs/openai-codex-distribution.md)
 - [Claude Code 分发](./docs/claude-code-distribution.md)
 - [OpenClaw / ClawHub 分发](./docs/openclaw-clawhub-distribution.md)
+
+当前 OpenClaw 侧已经完成首发注册表发布：`comfypet-jmcai-skill@1.0.0`。
+若 ClawHub 刚发布后短时间内还不可见，通常是平台安全扫描尚未完成，可稍后重试 `clawhub install comfypet-jmcai-skill` 或 `clawhub inspect comfypet-jmcai-skill`。
 
 ## Clone / ZIP 安装
 

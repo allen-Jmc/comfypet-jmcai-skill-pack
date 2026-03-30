@@ -14,6 +14,7 @@
 - 已通过安装脚本同步 `skills/comfypet-jmcai-skill/` 到目标目录。
 - `python scripts/jmcai_skill.py --version` 返回 `jmcai-skill 1.0.0`。
 - 安装脚本自动执行的 `doctor` 已成功连到本机 Workflow Bridge，并返回当前 bridge 版本与能力字段。
+- 已使用维护者账号完成 `clawhub publish`，首发版本为 `comfypet-jmcai-skill@1.0.0`。
 - 主仓 `qa:workflow-smoke` 已通过，覆盖了：
   - bridge health
   - `registry --agent`
@@ -24,6 +25,7 @@
 ## 当前阻塞
 
 - 当前机器未安装可直接调用的 OpenClaw 客户端命令，因此未能完成“客户端发现 skill”的最终联调。
+- ClawHub 刚发布后，`clawhub inspect comfypet-jmcai-skill` 可能短时间返回“hidden while security scan is pending”；这是平台扫描窗口，不是发布失败。
 - 当前 `doctor` 返回的主要问题是：`No enabled workflows are currently exposed by Workflow Bridge.`  
   这说明本机桌面端 bridge 可达，但当前会话里没有对外公开的已启用 workflow；这属于配置状态，不是 skill 安装损坏。
 
@@ -35,4 +37,5 @@
 ## 结论
 
 - Skill 安装目录结构与本地 Python CLI 调用链路通过。
+- OpenClaw 官方注册表首发分发链路通过。
 - OpenClaw 客户端级最终发现验收，仍受本机环境缺失限制。

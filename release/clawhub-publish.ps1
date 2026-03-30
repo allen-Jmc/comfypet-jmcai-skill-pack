@@ -25,7 +25,7 @@ if (-not (Test-Path $payloadRoot)) {
     throw "Skill payload not found: $payloadRoot"
 }
 
-$publishCommand = "clawhub skill publish `"$payloadRoot`" --slug `"$slug`" --name `"$displayName`" --version `"$Version`" --tags `"$tags`" --changelog `"$Changelog`""
+$publishCommand = "clawhub publish `"$payloadRoot`" --slug `"$slug`" --name `"$displayName`" --version `"$Version`" --tags `"$tags`" --changelog `"$Changelog`""
 $dryRunCommand = "clawhub sync --root `"$skillsRoot`" --dry-run --tags `"$tags`" --changelog `"$Changelog`""
 $syncCommand = "clawhub sync --root `"$skillsRoot`" --all --tags `"$tags`" --changelog `"$Changelog`" --bump patch"
 
