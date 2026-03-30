@@ -1,0 +1,128 @@
+# JMCAI Comfypet Skill Pack
+
+- 仓库名：`comfypet-jmcai-skill-pack`
+- 正式 skill 名：`comfypet-jmcai-skill`
+- 正式可安装 skill 子路径：`skills/comfypet-jmcai-skill/`
+- GitHub 仓库：`https://github.com/allen-Jmc/comfypet-jmcai-skill-pack`
+
+JMCAI Comfypet Skill Pack 是给 OpenClaw、Codex、Claude Code 共用的独立 skill 仓。仓库根目录负责提供人类文档、安装脚本和验收记录；真正给 agent 安装的只有 `skills/comfypet-jmcai-skill/` 这个标准 skill payload。
+
+## 文档导航
+
+- [安装指南](./docs/install-guide.md)
+- [使用指南](./docs/usage-guide.md)
+- [交付状态说明](./docs/release-readiness.md)
+- [Windows Codex 验收记录](./acceptance/windows-codex.md)
+- [Windows Claude Code 验收记录](./acceptance/windows-claude-code.md)
+- [Windows OpenClaw 验收记录](./acceptance/windows-openclaw.md)
+
+## 功能范围
+
+- 查询当前可供 agent 调用的 workflows
+- 读取安全 alias schema 与 agent metadata
+- 提交运行任务并轮询状态
+- 读取历史记录
+- 执行本地自检，确认 bridge、版本与默认 target 状态
+
+## 仓库结构
+
+```text
+CHANGELOG.md
+README.md
+acceptance/
+docs/
+install/
+skills/
+  comfypet-jmcai-skill/
+    SKILL.md
+    agents/openai.yaml
+    scripts/jmcai_skill.py
+    references/
+    assets/
+    config.example.json
+```
+
+## GitHub 安装
+
+### Codex
+
+优先安装 GitHub 仓库中的 skill 子路径：
+
+```text
+https://github.com/allen-Jmc/comfypet-jmcai-skill-pack/tree/main/skills/comfypet-jmcai-skill
+```
+
+注意：安装目标是 `skills/comfypet-jmcai-skill/`，不是整个仓库根目录。
+
+### Claude Code / OpenClaw
+
+当前以 clone 或下载 ZIP 后执行安装脚本为主。
+
+## Clone / ZIP 安装
+
+### Windows
+
+```powershell
+pwsh -File .\install\install.ps1 -Agent codex
+pwsh -File .\install\install.ps1 -Agent claude
+pwsh -File .\install\install.ps1 -Agent openclaw
+```
+
+### macOS / Linux
+
+```bash
+./install/install.sh codex
+./install/install.sh claude
+./install/install.sh openclaw
+```
+
+安装脚本会：
+
+- 同步 `skills/comfypet-jmcai-skill/` 到目标技能目录
+- 迁移旧目录 `jmcai-workflow-skill` 到新目录 `comfypet-jmcai-skill`
+- 保留已有 `config.json`
+- 自动执行 `doctor`
+
+## CLI
+
+正式 CLI 入口统一为：
+
+```bash
+python scripts/jmcai_skill.py --version
+python scripts/jmcai_skill.py doctor
+python scripts/jmcai_skill.py registry --agent
+python scripts/jmcai_skill.py run --workflow demo-workflow --args '{"prompt_1":"a studio cat"}'
+python scripts/jmcai_skill.py status --run-id <run_id>
+python scripts/jmcai_skill.py history --workflow demo-workflow --limit 5
+```
+
+CLI 输出始终为机器可读 JSON，字段统一为 `snake_case`。
+
+## 默认安装目录
+
+- Codex: `~/.codex/skills/comfypet-jmcai-skill`
+- Claude Code: `~/.claude/skills/comfypet-jmcai-skill`
+- OpenClaw: `~/.openclaw/workspace/skills/comfypet-jmcai-skill`
+
+## 更新
+
+### Windows
+
+```powershell
+pwsh -File .\install\update.ps1 -Agent codex
+```
+
+### macOS / Linux
+
+```bash
+./install/update.sh codex
+```
+
+更新脚本会尝试 `git pull --ff-only`，然后重新同步 skill 子目录并执行 `doctor`。
+
+## 排错
+
+- `doctor` 失败：先确认桌面端已启动，并检查 Workflow Bridge 是否可达
+- `python scripts/jmcai_skill.py` 不可用：确认是在 skill 安装目录内执行，且使用 Python 3
+- 看不到 workflow：确认 workflow 已启用，且默认 target 当前可用
+- 图片/视频任务失败：优先看 `status` 或 `history` 返回的 `error_message`

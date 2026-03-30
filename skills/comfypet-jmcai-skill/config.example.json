@@ -1,0 +1,5 @@
+{
+  "bridge_url": "http://127.0.0.1:32100",
+  "request_timeout_ms": 15000,
+  "min_bridge_version": "1.0.0"
+}

@@ -1,0 +1,180 @@
+# Skill 使用指南
+
+## 读者
+
+- 通过 OpenClaw、Codex、Claude Code 或命令行直接调用 skill 的使用者。
+
+## 用途
+
+- 说明正确调用顺序、图片和视频 workflow 的最小调用方式，以及运行结果应该怎么看。
+
+## 关联文档
+
+- [README](../README.md)
+- [安装指南](./install-guide.md)
+- [交付状态说明](./release-readiness.md)
+
+## 使用前提
+
+- Skill 已按 [安装指南](./install-guide.md) 正确安装
+- 桌面端已经启动
+- Workflow Center 中已经配置好 workflow、暴露参数和 target
+
+## 推荐调用顺序
+
+1. `doctor`
+2. `registry --agent`
+3. `run`
+4. `status`
+5. `history`
+
+## 1. 自检
+
+```powershell
+python scripts/jmcai_skill.py doctor
+```
+
+成功时会返回：
+
+- `bridge_version`
+- `capabilities`
+- `workflow_count`
+- `problems`
+- `warnings`
+
+## 2. 查询可用 workflow
+
+```powershell
+python scripts/jmcai_skill.py registry --agent
+```
+
+重点关注这些字段：
+
+- `id`
+- `name`
+- `summary`
+- `tags`
+- `input_modalities`
+- `output_modalities`
+- `example_prompts`
+- `schema`
+- `available_targets`
+- `default_target_id`
+
+## 3. 提交一次图片 workflow
+
+```powershell
+python scripts/jmcai_skill.py run --workflow smoke-workflow --args "{\"prompt_1\":\"a clean product photo\",\"image_6\":\"C:\\Users\\cdall\\Pictures\\input.png\"}"
+```
+
+说明：
+
+- `args` 只能使用 `registry --agent` 返回的 alias 字段
+- `image` 参数必须是本机绝对路径
+- 如果 workflow 配置了默认 target，可以不传 `--target`
+
+## 4. 提交一次视频 workflow
+
+```powershell
+python scripts/jmcai_skill.py run --workflow smoke-video-workflow --args "{\"prompt_1\":\"a cinematic cat video\"}"
+```
+
+图片 workflow 和视频 workflow 的调用形式相同，区别主要体现在：
+
+- `registry --agent` 返回的 `output_modalities`
+- `status` / `history` 返回的 `outputs[*].media_kind`
+
+## 5. 查询运行状态
+
+```powershell
+python scripts/jmcai_skill.py status --run-id <run_id>
+```
+
+当前状态只有四种：
+
+- `queued`
+- `running`
+- `success`
+- `error`
+
+成功时，读取 `outputs`。
+
+## 6. 读取历史
+
+```powershell
+python scripts/jmcai_skill.py history --workflow smoke-workflow --limit 5
+```
+
+适合用于：
+
+- 回看最近运行记录
+- 对比图片 / 视频输出
+- 查找错误信息
+
+## 输出结果怎么看
+
+`outputs` 当前是 typed output 数组，例如：
+
+```json
+[
+  {
+    "path": "C:\\Users\\cdall\\AppData\\Roaming\\...\\smoke-video-workflow_01.mp4",
+    "media_kind": "video",
+    "file_name": "smoke-video-workflow_01.mp4",
+    "mime_type": "video/mp4"
+  }
+]
+```
+
+字段含义：
+
+- `path`：本地绝对路径
+- `media_kind`：`image | video | file`
+- `file_name`：文件名
+- `mime_type`：可选 MIME 类型
+
+## 参数使用规则
+
+- 只能填写已暴露 alias 参数
+- 不能自己构造 `node_id.field` 参数
+- `required: true` 的参数必须补齐
+- `choices`、`min`、`max` 会继续由 bridge 在主应用侧做硬校验
+- `image` 类型必须提供本机绝对路径
+
+## 不支持的事情
+
+当前 V1 不支持：
+
+- 通过 skill 导入 workflow
+- 通过 skill 修改 schema
+- 通过 skill 修改 target 绑定
+- 通过 skill 直连 ComfyUI 原生 `/prompt`
+
+## 常见错误
+
+### `No enabled workflows are currently exposed by Workflow Bridge.`
+
+说明桌面端当前没有对外公开任何可用 workflow。  
+优先检查：
+
+- workflow 是否启用
+- default target 是否存在
+- target 当前是否可用
+
+### `Cannot reach Workflow Bridge`
+
+说明 skill 能运行，但本地 bridge 不可达。  
+优先检查：
+
+- 桌面端是否已启动
+- `bridge_url` 是否正确
+- `127.0.0.1:32100` 是否被其他程序占用或未监听
+
+### `未知参数`
+
+说明传入了 schema 之外的字段。  
+只使用 `registry --agent` 返回的 alias。
+
+### `缺少必填参数`
+
+说明 workflow 需要的 exposed args 没传齐。
