@@ -12,6 +12,7 @@
 
 - [README](../README.md)
 - [使用指南](./usage-guide.md)
+- [平台分发总览](./platform-distribution.md)
 - [交付状态说明](./release-readiness.md)
 
 ## 安装前检查

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Added platform distribution metadata in `SKILL.md` for OpenClaw / ClawHub compatibility.
+- Added `release/` scripts to build `dist/` payload artifacts and prepare ClawHub publish commands.
+- Added platform distribution docs for OpenAI/Codex, Claude Code, and OpenClaw / ClawHub.
+
 ## v1.0.0
 
 - Formalized the standalone skill-pack naming as `comfypet-jmcai-skill-pack`.

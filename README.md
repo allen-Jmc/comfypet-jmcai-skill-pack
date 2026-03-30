@@ -11,6 +11,10 @@ JMCAI Comfypet Skill Pack 是给 OpenClaw、Codex、Claude Code 共用的独立 
 
 - [安装指南](./docs/install-guide.md)
 - [使用指南](./docs/usage-guide.md)
+- [平台分发总览](./docs/platform-distribution.md)
+- [OpenAI / Codex 分发](./docs/openai-codex-distribution.md)
+- [Claude Code 分发](./docs/claude-code-distribution.md)
+- [OpenClaw / ClawHub 分发](./docs/openclaw-clawhub-distribution.md)
 - [交付状态说明](./docs/release-readiness.md)
 - [Windows Codex 验收记录](./acceptance/windows-codex.md)
 - [Windows Claude Code 验收记录](./acceptance/windows-claude-code.md)
@@ -57,6 +61,39 @@ https://github.com/allen-Jmc/comfypet-jmcai-skill-pack/tree/main/skills/comfypet
 ### Claude Code / OpenClaw
 
 当前以 clone 或下载 ZIP 后执行安装脚本为主。
+
+## 平台分发与发布产物
+
+- OpenAI / Codex：GitHub 分发 + ChatGPT Skills 页面上传 / 工作区分享
+- Claude Code：GitHub 分发 + 官方 skills 目录安装 / 项目级共享
+- OpenClaw：GitHub 分发 + ClawHub 发布就绪
+
+发布者若要生成正式分发产物，请在仓库根目录执行：
+
+### Windows
+
+```powershell
+pwsh -File .\release\build-distribution.ps1
+```
+
+### macOS / Linux
+
+```bash
+./release/build-distribution.sh
+```
+
+产物会生成到 `dist/`：
+
+- `dist/comfypet-jmcai-skill/`
+- `dist/comfypet-jmcai-skill-v1.0.0.zip`
+- `dist/checksums.txt`
+
+平台级分发细节见：
+
+- [平台分发总览](./docs/platform-distribution.md)
+- [OpenAI / Codex 分发](./docs/openai-codex-distribution.md)
+- [Claude Code 分发](./docs/claude-code-distribution.md)
+- [OpenClaw / ClawHub 分发](./docs/openclaw-clawhub-distribution.md)
 
 ## Clone / ZIP 安装
 

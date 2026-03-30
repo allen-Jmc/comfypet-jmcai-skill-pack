@@ -2,6 +2,8 @@
 name: comfypet-jmcai-skill
 description: |
   调用 JMCAI Comfypet 桌面应用中已经配置好的 ComfyUI 图片和视频工作流。用于查询可用 workflow、读取暴露参数、提交运行并轮询结果。适用于用户要求生成图片、生成视频或执行已配置 workflow 的场景；不适用于导入 workflow、修改 schema、修改 target 绑定或直连原生 ComfyUI 接口。
+allowed-tools: ["Bash(python *)", "Bash(python3 *)", "Bash(py *)"]
+metadata: {"openclaw":{"emoji":"🐾","homepage":"https://github.com/allen-Jmc/comfypet-jmcai-skill-pack","requires":{"anyBins":["python","python3","py"]},"os":["win32","linux","darwin"]}}
 ---
 
 # JMCAI Comfypet Skill
