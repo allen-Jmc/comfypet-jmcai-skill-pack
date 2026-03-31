@@ -14,7 +14,7 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 DEFAULT_CONFIG = {
     "bridge_url": "http://127.0.0.1:32100",
     "request_timeout_ms": 15000,

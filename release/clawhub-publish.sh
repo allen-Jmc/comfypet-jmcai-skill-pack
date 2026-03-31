@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-version="${1:-1.0.0}"
+version="${1:-1.1.0}"
 repo_root="${2:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
-changelog="${3:-Initial public release}"
+changelog="${3:-Release 1.1.0}"
 run_dry_run="${RUN_DRY_RUN:-0}"
 
 if [[ ! "${version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then

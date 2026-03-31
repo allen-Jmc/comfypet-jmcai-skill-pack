@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v1.1.0
+
 - Added remote bridge auto-upload/download support and raised the minimum bridge requirement to `1.1.0`.
 - Added the manifest-driven `jmcai-release-manager` workflow for dual-repo release preparation and publish.
 - Added repo-local release manager wrappers so maintainers can trigger the same release flow from either repo.

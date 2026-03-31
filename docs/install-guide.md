@@ -103,7 +103,7 @@ python scripts/jmcai_skill.py --version
 期望返回：
 
 ```text
-jmcai-skill 1.0.0
+jmcai-skill 1.1.0
 ```
 
 ### 2. 验证 bridge

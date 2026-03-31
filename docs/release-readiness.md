@@ -56,7 +56,7 @@
 - Skill 仓：
   - `python -m py_compile ...`
   - 新 skill 子路径中的 `python scripts/jmcai_skill.py --version`
-  - `clawhub publish` 首发成功：`comfypet-jmcai-skill@1.0.0`
+  - `clawhub publish` 首发成功：`comfypet-jmcai-skill@1.1.0`
 
 ## 当前阻塞
 

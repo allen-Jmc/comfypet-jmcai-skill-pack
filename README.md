@@ -85,7 +85,7 @@ pwsh -File .\release\build-distribution.ps1
 产物会生成到 `dist/`：
 
 - `dist/comfypet-jmcai-skill/`
-- `dist/comfypet-jmcai-skill-v1.0.0.zip`
+- `dist/comfypet-jmcai-skill-v1.1.0.zip`
 - `dist/checksums.txt`
 
 平台级分发细节见：
@@ -95,7 +95,7 @@ pwsh -File .\release\build-distribution.ps1
 - [Claude Code 分发](./docs/claude-code-distribution.md)
 - [OpenClaw / ClawHub 分发](./docs/openclaw-clawhub-distribution.md)
 
-当前 OpenClaw 侧已经完成首发注册表发布：`comfypet-jmcai-skill@1.0.0`。
+当前 OpenClaw 侧已经完成首发注册表发布：`comfypet-jmcai-skill@1.1.0`。
 若 ClawHub 刚发布后短时间内还不可见，通常是平台安全扫描尚未完成，可稍后重试 `clawhub install comfypet-jmcai-skill` 或 `clawhub inspect comfypet-jmcai-skill`。
 
 ## Clone / ZIP 安装
