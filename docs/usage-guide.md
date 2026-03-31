@@ -70,7 +70,8 @@ python scripts/jmcai_skill.py run --workflow smoke-workflow --args "{\"prompt_1\
 说明：
 
 - `args` 只能使用 `registry --agent` 返回的 alias 字段
-- `image` 参数必须是本机绝对路径
+- 本机 bridge 场景下，`image` 参数可直接使用本机绝对路径
+- 局域网远程 bridge 场景下，仍然传当前机器的本机绝对路径，skill 会自动上传并改写成 `upload:<id>`
 - 如果 workflow 配置了默认 target，可以不传 `--target`
 
 ## 4. 提交一次视频 workflow
@@ -128,7 +129,7 @@ python scripts/jmcai_skill.py history --workflow smoke-workflow --limit 5
 
 字段含义：
 
-- `path`：本地绝对路径
+- `path`：当前执行 skill 这台机器上的本地绝对路径；远程 bridge 场景会先自动下载再返回
 - `media_kind`：`image | video | file`
 - `file_name`：文件名
 - `mime_type`：可选 MIME 类型
@@ -139,7 +140,7 @@ python scripts/jmcai_skill.py history --workflow smoke-workflow --limit 5
 - 不能自己构造 `node_id.field` 参数
 - `required: true` 的参数必须补齐
 - `choices`、`min`、`max` 会继续由 bridge 在主应用侧做硬校验
-- `image` 类型必须提供本机绝对路径
+- `image` 类型始终传当前机器上的本机绝对路径；远程 bridge 会由 skill 自动上传
 
 ## 不支持的事情
 
@@ -163,12 +164,12 @@ python scripts/jmcai_skill.py history --workflow smoke-workflow --limit 5
 
 ### `Cannot reach Workflow Bridge`
 
-说明 skill 能运行，但本地 bridge 不可达。  
+说明 skill 能运行，但你配置的 bridge 不可达。  
 优先检查：
 
 - 桌面端是否已启动
 - `bridge_url` 是否正确
-- `127.0.0.1:32100` 是否被其他程序占用或未监听
+- 目标主机的 `32100` 端口是否可达，或本机 `127.0.0.1:32100` 是否被其他程序占用或未监听
 
 ### `未知参数`
 

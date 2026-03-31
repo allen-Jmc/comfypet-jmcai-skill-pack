@@ -132,10 +132,16 @@ python scripts/jmcai_skill.py registry --agent
 - `request_timeout_ms`
 - `min_bridge_version`
 
-默认 bridge 地址为：
+默认 bridge 地址示例为：
 
 ```text
 http://127.0.0.1:32100
+```
+
+如果 agent 和桌面端不在同一台机器，可以把 `bridge_url` 改成局域网内桌面端主机地址，例如：
+
+```text
+http://192.168.1.23:32100
 ```
 
 ## 旧目录迁移规则
@@ -152,7 +158,7 @@ http://127.0.0.1:32100
 优先检查：
 
 - JMCAI Comfypet 桌面应用是否已启动
-- Workflow Bridge 是否正在监听 `127.0.0.1:32100`
+- Workflow Bridge 是否正在监听你配置的 `bridge_url`
 - 是否至少有一个已启用 workflow 被公开
 
 ### `python scripts/jmcai_skill.py --version` 失败

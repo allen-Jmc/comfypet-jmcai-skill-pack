@@ -6,9 +6,11 @@
 
 1. 用 `registry --agent` 找到 `output_modalities` 包含 `image` 的 workflow
 2. 填写必填文本参数
-3. 若 schema 中包含 `image` 字段，传本机绝对路径
+3. 若 schema 中包含 `image` 字段：
+   - 本机直连 bridge 时，传本机绝对路径
+   - 远程 bridge 时，仍然传当前机器的本机绝对路径，skill 会自动上传
 4. 调用 `run`
-5. 用 `status` 读取图片输出路径
+5. 用 `status` 读取图片输出路径；远程 bridge 场景会自动下载到当前机器
 
 示例：
 
@@ -38,6 +40,9 @@ python scripts/jmcai_skill.py run --workflow demo-video --args '{"prompt_1":"a c
 
 - `Cannot reach Workflow Bridge`
   说明 bridge 不可达，优先检查桌面端是否已启动
+
+- `Bridge upload response did not include upload_id.`
+  说明远程桌面端 bridge 版本过低或未正确升级到新上传接口
 
 - `未知参数`
   说明传入了 schema 之外的字段

@@ -17,14 +17,16 @@
 - 只能使用 `registry --agent` 返回的 alias 字段名
 - 不能构造 `node_id.field`
 - `required: true` 的参数必须补齐
-- `image` 类型参数必须是本机绝对路径
+- 本机直连 bridge 时，`image` 类型参数必须是本机绝对路径
+- 远程 bridge 场景下，skill 会先调用 `POST /api/v1/uploads`，再把参数改写为 `upload:<id>`
 - `choices`、`min`、`max` 仍由 bridge 在主应用侧强校验
 
 ## Outputs 规则
 
 `status` 和 `history` 返回的 `outputs` 是 typed output 数组：
 
-- `path`: 本地绝对路径
+- `path`: 本地绝对路径；对远程 bridge 场景，skill 会自动下载到当前机器后重写为当前机器路径
+- `download_path`: bridge 侧输出下载接口相对路径
 - `media_kind`: `image | video | file`
 - `file_name`: 输出文件名
 - `mime_type`: 可选 MIME 类型

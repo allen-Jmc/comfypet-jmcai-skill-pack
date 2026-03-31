@@ -41,7 +41,8 @@ python scripts/jmcai_skill.py history --workflow <workflow_id> --limit 5
 
 - 缺少 `required: true` 的参数时，向用户追问或在上下文足够明确时补齐
 - 只能使用 `registry --agent` 返回的 alias 参数名
-- `image` 类型参数必须是本机绝对路径
+- `image` 类型参数对本机 bridge 仍可直接传本机绝对路径
+- 当 `bridge_url` 指向局域网另一台桌面端时，skill 会自动把本机图片上传成 `upload:<id>`，不用手工改写参数
 - 不要修改 schema、workflow 或 target 配置
 
 ## Failure Handling
@@ -49,7 +50,7 @@ python scripts/jmcai_skill.py history --workflow <workflow_id> --limit 5
 - `doctor` 失败：提示用户启动或升级 JMCAI 桌面应用
 - `run` 返回错误：把错误原文反馈给用户，不要伪造成功
 - `status` 返回 `queued` 或 `running`：告诉用户仍在生成，并在下一次独立调用中继续查询
-- `status` 返回 `success`：返回 `outputs` 中的本地文件路径
+- `status` 返回 `success`：优先返回 `outputs` 中已经自动下载到当前机器的本地文件路径
 
 需要 bridge 契约细节时，读取 `references/bridge.md`。  
 需要图片 / 视频工作流示例时，读取 `references/usage.md`。
