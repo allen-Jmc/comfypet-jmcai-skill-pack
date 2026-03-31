@@ -2,9 +2,9 @@
 
 ## Unreleased
 
-- Added platform distribution metadata in `SKILL.md` for OpenClaw / ClawHub compatibility.
-- Added `release/` scripts to build `dist/` payload artifacts and prepare ClawHub publish commands.
-- Added platform distribution docs for OpenAI/Codex, Claude Code, and OpenClaw / ClawHub.
+- Added remote bridge auto-upload/download support and raised the minimum bridge requirement to `1.1.0`.
+- Added the manifest-driven `jmcai-release-manager` workflow for dual-repo release preparation and publish.
+- Added repo-local release manager wrappers so maintainers can trigger the same release flow from either repo.
 
 ## v1.0.0
 
