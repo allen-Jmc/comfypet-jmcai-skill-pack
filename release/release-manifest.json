@@ -88,7 +88,7 @@
       "type": "regex_replace",
       "path": "release/build-distribution.sh",
       "pattern": "version=\"\\$\\{1:-[^}]+\\}\"",
-      "replacement": "version=\"${1:-{version}}\""
+      "replacement": "version=\"${{1:-{version}}}\""
     },
     {
       "phase": "prepare",
@@ -109,14 +109,14 @@
       "type": "regex_replace",
       "path": "release/clawhub-publish.sh",
       "pattern": "version=\"\\$\\{1:-[^}]+\\}\"",
-      "replacement": "version=\"${1:-{version}}\""
+      "replacement": "version=\"${{1:-{version}}}\""
     },
     {
       "phase": "prepare",
       "type": "regex_replace",
       "path": "release/clawhub-publish.sh",
       "pattern": "changelog=\"\\$\\{3:-[^}]+\\}\"",
-      "replacement": "changelog=\"${3:-Release {version}}\""
+      "replacement": "changelog=\"${{3:-Release {version}}}\""
     },
     {
       "phase": "publish",
