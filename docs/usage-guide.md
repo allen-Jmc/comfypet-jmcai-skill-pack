@@ -31,7 +31,7 @@
 ## 1. 自检
 
 ```powershell
-python scripts/jmcai_skill.py doctor
+python jmcai_skill.py doctor
 ```
 
 成功时会返回：
@@ -45,7 +45,7 @@ python scripts/jmcai_skill.py doctor
 ## 2. 查询可用 workflow
 
 ```powershell
-python scripts/jmcai_skill.py registry --agent
+python jmcai_skill.py registry --agent
 ```
 
 重点关注这些字段：
@@ -64,7 +64,7 @@ python scripts/jmcai_skill.py registry --agent
 ## 3. 提交一次图片 workflow
 
 ```powershell
-python scripts/jmcai_skill.py run --workflow smoke-workflow --args "{\"prompt_1\":\"a clean product photo\",\"image_6\":\"C:\\Users\\cdall\\Pictures\\input.png\"}"
+python jmcai_skill.py run --workflow smoke-workflow --args "{\"prompt_1\":\"a clean product photo\",\"image_6\":\"C:\\Users\\cdall\\Pictures\\input.png\"}"
 ```
 
 说明：
@@ -77,7 +77,7 @@ python scripts/jmcai_skill.py run --workflow smoke-workflow --args "{\"prompt_1\
 ## 4. 提交一次视频 workflow
 
 ```powershell
-python scripts/jmcai_skill.py run --workflow smoke-video-workflow --args "{\"prompt_1\":\"a cinematic cat video\"}"
+python jmcai_skill.py run --workflow smoke-video-workflow --args "{\"prompt_1\":\"a cinematic cat video\"}"
 ```
 
 图片 workflow 和视频 workflow 的调用形式相同，区别主要体现在：
@@ -88,7 +88,7 @@ python scripts/jmcai_skill.py run --workflow smoke-video-workflow --args "{\"pro
 ## 5. 查询运行状态
 
 ```powershell
-python scripts/jmcai_skill.py status --run-id <run_id>
+python jmcai_skill.py status --run-id <run_id>
 ```
 
 当前状态只有四种：
@@ -103,7 +103,7 @@ python scripts/jmcai_skill.py status --run-id <run_id>
 ## 6. 读取历史
 
 ```powershell
-python scripts/jmcai_skill.py history --workflow smoke-workflow --limit 5
+python jmcai_skill.py history --workflow smoke-workflow --limit 5
 ```
 
 适合用于：

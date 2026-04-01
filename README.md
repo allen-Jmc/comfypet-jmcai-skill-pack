@@ -39,8 +39,9 @@ install/
 skills/
   comfypet-jmcai-skill/
     SKILL.md
+    __init__.py
+    jmcai_skill.py
     agents/openai.yaml
-    scripts/jmcai_skill.py
     references/
     assets/
     config.example.json
@@ -128,12 +129,12 @@ pwsh -File .\install\install.ps1 -Agent openclaw
 正式 CLI 入口统一为：
 
 ```bash
-python scripts/jmcai_skill.py --version
-python scripts/jmcai_skill.py doctor
-python scripts/jmcai_skill.py registry --agent
-python scripts/jmcai_skill.py run --workflow demo-workflow --args '{"prompt_1":"a studio cat"}'
-python scripts/jmcai_skill.py status --run-id <run_id>
-python scripts/jmcai_skill.py history --workflow demo-workflow --limit 5
+python jmcai_skill.py --version
+python jmcai_skill.py doctor
+python jmcai_skill.py registry --agent
+python jmcai_skill.py run --workflow demo-workflow --args '{"prompt_1":"a studio cat"}'
+python jmcai_skill.py status --run-id <run_id>
+python jmcai_skill.py history --workflow demo-workflow --limit 5
 ```
 
 CLI 输出始终为机器可读 JSON，字段统一为 `snake_case`。
@@ -163,6 +164,6 @@ pwsh -File .\install\update.ps1 -Agent codex
 ## 排错
 
 - `doctor` 失败：先确认桌面端已启动，并检查 Workflow Bridge 是否可达
-- `python scripts/jmcai_skill.py` 不可用：确认是在 skill 安装目录内执行，且使用 Python 3
+- `python jmcai_skill.py` 不可用：确认是在 skill 安装目录内执行，且使用 Python 3
 - 看不到 workflow：确认 workflow 已启用，且默认 target 当前可用
 - 图片/视频任务失败：优先看 `status` 或 `history` 返回的 `error_message`

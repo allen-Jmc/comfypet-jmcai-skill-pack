@@ -10,9 +10,9 @@
 ## 已完成
 
 - 目标目录已创建。
-- 安装目录已收口为标准 payload 形态，只包含 `SKILL.md + agents + assets + references + scripts + config.*`。
+- 安装目录已收口为标准 payload 形态，只包含 `SKILL.md + agents + assets + references + jmcai_skill.py + __init__.py + config.*`。
 - 已通过安装脚本同步 `skills/comfypet-jmcai-skill/` 到目标目录。
-- `python scripts/jmcai_skill.py --version` 返回 `jmcai-skill 1.0.0`。
+- `python jmcai_skill.py --version` 返回 `jmcai-skill 1.0.0`。
 - 安装脚本自动执行的 `doctor` 已成功连到本机 Workflow Bridge，并返回当前 bridge 版本与能力字段。
 - 已使用维护者账号完成 `clawhub publish`，首发版本为 `comfypet-jmcai-skill@1.0.0`。
 - 主仓 `qa:workflow-smoke` 已通过，覆盖了：

@@ -59,8 +59,8 @@ pwsh -File .\release\build-distribution.ps1
 3. 在目标目录中验证：
 
 ```powershell
-python scripts/jmcai_skill.py --version
-python scripts/jmcai_skill.py doctor
+python jmcai_skill.py --version
+python jmcai_skill.py doctor
 ```
 
 ## 团队共享推荐规则

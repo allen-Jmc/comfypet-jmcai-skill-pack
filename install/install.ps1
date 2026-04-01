@@ -82,7 +82,7 @@ if ($backupConfig) {
 $pythonCommand = Resolve-PythonCommand
 $pythonExe = $pythonCommand.Executable
 $pythonArgs = @($pythonCommand.Arguments)
-$pythonArgs += @('scripts/jmcai_skill.py', '--config', 'config.json', 'doctor')
+$pythonArgs += @('jmcai_skill.py', '--config', 'config.json', 'doctor')
 
 Push-Location $targetDir
 $doctorExitCode = 0
@@ -94,7 +94,7 @@ try {
 }
 
 if ($doctorExitCode -ne 0) {
-    Write-Warning "Skill payload installed, but doctor reported issues. Open JMCAI desktop app and rerun 'python scripts/jmcai_skill.py doctor' in $targetDir."
+    Write-Warning "Skill payload installed, but doctor reported issues. Open JMCAI desktop app and rerun 'python jmcai_skill.py doctor' in $targetDir."
 }
 
 Write-Host "Installed $skillName to $targetDir"

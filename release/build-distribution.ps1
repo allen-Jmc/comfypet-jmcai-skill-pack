@@ -19,7 +19,7 @@ $checksumsPath = Join-Path $distRoot 'checksums.txt'
 $requiredPaths = @(
     (Join-Path $payloadRoot 'SKILL.md'),
     (Join-Path $payloadRoot 'agents\openai.yaml'),
-    (Join-Path $payloadRoot 'scripts\jmcai_skill.py'),
+    (Join-Path $payloadRoot 'jmcai_skill.py'),
     (Join-Path $payloadRoot 'references'),
     (Join-Path $payloadRoot 'assets'),
     (Join-Path $payloadRoot 'config.example.json')

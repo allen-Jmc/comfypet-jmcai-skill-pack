@@ -67,9 +67,9 @@ fi
 
 if ! (
   cd "${target_dir}"
-  "${python_bin}" scripts/jmcai_skill.py --config config.json doctor
+  "${python_bin}" jmcai_skill.py --config config.json doctor
 ); then
-  echo "Warning: skill payload installed, but doctor reported issues. Open JMCAI desktop app and rerun 'python scripts/jmcai_skill.py doctor' in ${target_dir}." >&2
+  echo "Warning: skill payload installed, but doctor reported issues. Open JMCAI desktop app and rerun 'python jmcai_skill.py doctor' in ${target_dir}." >&2
 fi
 
 echo "Installed ${skill_name} to ${target_dir}"

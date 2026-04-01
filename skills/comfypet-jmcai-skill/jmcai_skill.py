@@ -20,7 +20,9 @@ DEFAULT_CONFIG = {
     "request_timeout_ms": 15000,
     "min_bridge_version": "1.1.0",
 }
-SKILL_ROOT = Path(__file__).resolve().parent.parent
+
+# 智能路径寻址：确保加载 config.json 或资源文件时使用绝对路径
+SKILL_ROOT = Path(__file__).resolve().parent
 LOOPBACK_BRIDGE_HOSTS = {"127.0.0.1", "localhost", "::1"}
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -28,6 +30,43 @@ if hasattr(sys.stdout, "reconfigure"):
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
 
+class RequestFailure(Exception):
+    def __init__(self, message: str, payload: Any) -> None:
+        super().__init__(message)
+        self.message = message
+        self.payload = payload
+
+# ==========================================
+# Dual-Mode: Registry 暴露与解耦配置加载
+# ==========================================
+
+def load_config(explicit_path: str | None = None) -> dict[str, Any]:
+    """解耦配置加载逻辑，支持无参调用（默认搜寻 SKILL_ROOT）"""
+    config_path = Path(explicit_path).resolve() if explicit_path else SKILL_ROOT / "config.json"
+    if config_path.exists():
+        with config_path.open("r", encoding="utf-8") as handle:
+            loaded = json.load(handle)
+            return {**DEFAULT_CONFIG, **loaded}
+
+    example_path = SKILL_ROOT / "config.example.json"
+    if example_path.exists():
+        with example_path.open("r", encoding="utf-8") as handle:
+            loaded = json.load(handle)
+            return {**DEFAULT_CONFIG, **loaded}
+
+    return dict(DEFAULT_CONFIG)
+
+def registry() -> dict[str, Any]:
+    """
+    显式暴露的 Registry 入口：
+    供 Agent 框架 (如 OpenClaw) 导入模块时直接调用 `import jmcai_skill; jmcai_skill.registry()` 获取技能元数据。
+    """
+    config = load_config()
+    return registry_command(config, _agent_mode=True)
+
+# ==========================================
+# CLI 入口与路由
+# ==========================================
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="JMCAI Comfypet Skill CLI")
@@ -78,22 +117,9 @@ def main(argv: list[str] | None = None) -> int:
 
     return 1
 
-
-def load_config(explicit_path: str | None) -> dict[str, Any]:
-    config_path = Path(explicit_path).resolve() if explicit_path else SKILL_ROOT / "config.json"
-    if config_path.exists():
-        with config_path.open("r", encoding="utf-8") as handle:
-            loaded = json.load(handle)
-            return {**DEFAULT_CONFIG, **loaded}
-
-    example_path = SKILL_ROOT / "config.example.json"
-    if example_path.exists():
-        with example_path.open("r", encoding="utf-8") as handle:
-            loaded = json.load(handle)
-            return {**DEFAULT_CONFIG, **loaded}
-
-    return dict(DEFAULT_CONFIG)
-
+# ==========================================
+# 核心功能实现
+# ==========================================
 
 def registry_command(config: dict[str, Any], _agent_mode: bool) -> dict[str, Any]:
     health = request_json(config, "GET", "/api/v1/health")
@@ -599,13 +625,6 @@ def safe_int(value: str) -> int:
 
 def emit(payload: dict[str, Any]) -> None:
     print(json.dumps(payload, ensure_ascii=False, indent=2))
-
-
-class RequestFailure(Exception):
-    def __init__(self, message: str, payload: Any) -> None:
-        super().__init__(message)
-        self.message = message
-        self.payload = payload
 
 
 if __name__ == "__main__":

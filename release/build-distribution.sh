@@ -18,7 +18,7 @@ fi
 for required_path in \
   "${payload_root}/SKILL.md" \
   "${payload_root}/agents/openai.yaml" \
-  "${payload_root}/scripts/jmcai_skill.py" \
+  "${payload_root}/jmcai_skill.py" \
   "${payload_root}/references" \
   "${payload_root}/assets" \
   "${payload_root}/config.example.json"; do

@@ -35,7 +35,7 @@
 
 - `SKILL.md`
 - `agents/openai.yaml`
-- `scripts/`
+- `jmcai_skill.py`
 - `references/`
 - `assets/`
 - `config.example.json`
@@ -52,7 +52,7 @@ pwsh -File .\release\build-distribution.ps1
 
 - `agents/openai.yaml`
 - `SKILL.md`
-- `scripts/jmcai_skill.py`
+- `jmcai_skill.py`
 
 3. 确认 `agents/openai.yaml` 的品牌信息符合当前版本：
 
@@ -73,8 +73,8 @@ pwsh -File .\release\build-distribution.ps1
 3. 从已配置 workflow 的桌面端环境中跑：
 
 ```powershell
-python scripts/jmcai_skill.py doctor
-python scripts/jmcai_skill.py registry --agent
+python jmcai_skill.py doctor
+python jmcai_skill.py registry --agent
 ```
 
 4. 再验证一条图片 workflow 和一条视频 workflow

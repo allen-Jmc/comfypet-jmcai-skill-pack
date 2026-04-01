@@ -86,7 +86,8 @@ comfypet-jmcai-skill/
   agents/
   assets/
   references/
-  scripts/
+  jmcai_skill.py
+  __init__.py
   config.example.json
   config.json
   SKILL.md
@@ -97,7 +98,7 @@ comfypet-jmcai-skill/
 ### 1. 验证 CLI
 
 ```powershell
-python scripts/jmcai_skill.py --version
+python jmcai_skill.py --version
 ```
 
 期望返回：
@@ -109,7 +110,7 @@ jmcai-skill 1.1.0
 ### 2. 验证 bridge
 
 ```powershell
-python scripts/jmcai_skill.py doctor
+python jmcai_skill.py doctor
 ```
 
 如果桌面端正在运行且 bridge 已暴露 workflow，`doctor` 应返回 `status: "success"`。
@@ -117,7 +118,7 @@ python scripts/jmcai_skill.py doctor
 ### 3. 验证可见 workflows
 
 ```powershell
-python scripts/jmcai_skill.py registry --agent
+python jmcai_skill.py registry --agent
 ```
 
 若结果中 `workflow_count > 0`，说明当前 skill 已能看到桌面端公开的 workflow。
@@ -161,11 +162,11 @@ http://192.168.1.23:32100
 - Workflow Bridge 是否正在监听你配置的 `bridge_url`
 - 是否至少有一个已启用 workflow 被公开
 
-### `python scripts/jmcai_skill.py --version` 失败
+### `python jmcai_skill.py --version` 失败
 
 优先检查：
 
-- 目标目录下是否存在 `scripts/jmcai_skill.py`
+- 目标目录下是否存在 `jmcai_skill.py`
 - 是否使用 Python 3 运行
 - 是否误把整个仓库根目录当作 skill 安装目标
 

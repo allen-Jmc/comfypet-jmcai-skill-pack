@@ -15,7 +15,7 @@
 示例：
 
 ```bash
-python scripts/jmcai_skill.py run --workflow demo-image --args '{"prompt_1":"a clean product photo","image_6":"C:\\Users\\name\\Pictures\\input.png"}'
+python jmcai_skill.py run --workflow demo-image --args '{"prompt_1":"a clean product photo","image_6":"C:\\Users\\name\\Pictures\\input.png"}'
 ```
 
 ## 视频 workflow
@@ -30,7 +30,7 @@ python scripts/jmcai_skill.py run --workflow demo-image --args '{"prompt_1":"a c
 示例：
 
 ```bash
-python scripts/jmcai_skill.py run --workflow demo-video --args '{"prompt_1":"a cinematic cat video"}'
+python jmcai_skill.py run --workflow demo-video --args '{"prompt_1":"a cinematic cat video"}'
 ```
 
 ## 常见错误

@@ -11,8 +11,8 @@ metadata: {"openclaw":{"emoji":"🐾","homepage":"https://github.com/allen-Jmc/c
 先运行：
 
 ```bash
-python scripts/jmcai_skill.py doctor
-python scripts/jmcai_skill.py registry --agent
+python jmcai_skill.py doctor
+python jmcai_skill.py registry --agent
 ```
 
 然后按以下顺序执行：
@@ -22,19 +22,19 @@ python scripts/jmcai_skill.py registry --agent
 3. 提交运行：
 
 ```bash
-python scripts/jmcai_skill.py run --workflow <workflow_id> --args '{"prompt_1":"a cinematic scene"}'
+python jmcai_skill.py run --workflow <workflow_id> --args '{"prompt_1":"a cinematic scene"}'
 ```
 
 4. 读取 `run_id` 后，单次查询状态：
 
 ```bash
-python scripts/jmcai_skill.py status --run-id <run_id>
+python jmcai_skill.py status --run-id <run_id>
 ```
 
 5. 如需回看，再读取：
 
 ```bash
-python scripts/jmcai_skill.py history --workflow <workflow_id> --limit 5
+python jmcai_skill.py history --workflow <workflow_id> --limit 5
 ```
 
 ## Parameter Rules

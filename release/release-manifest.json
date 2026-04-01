@@ -4,7 +4,7 @@
   "repo_name": "comfypet-jmcai-skill-pack",
   "version_probe": {
     "type": "regex_extract",
-    "path": "skills/comfypet-jmcai-skill/scripts/jmcai_skill.py",
+    "path": "skills/comfypet-jmcai-skill/jmcai_skill.py",
     "pattern": "^VERSION = \"([^\"]+)\"$"
   },
   "git": {
@@ -16,7 +16,7 @@
     {
       "phase": "prepare",
       "type": "regex_replace",
-      "path": "skills/comfypet-jmcai-skill/scripts/jmcai_skill.py",
+      "path": "skills/comfypet-jmcai-skill/jmcai_skill.py",
       "pattern": "^VERSION = \"[^\"]+\"$",
       "replacement": "VERSION = \"{version}\""
     },
@@ -160,7 +160,7 @@
         "python",
         "-m",
         "py_compile",
-        "skills/comfypet-jmcai-skill/scripts/jmcai_skill.py"
+        "skills/comfypet-jmcai-skill/jmcai_skill.py"
       ]
     },
     {
