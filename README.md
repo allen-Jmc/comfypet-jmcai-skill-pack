@@ -86,7 +86,7 @@ pwsh -File .\release\build-distribution.ps1
 产物会生成到 `dist/`：
 
 - `dist/comfypet-jmcai-skill/`
-- `dist/comfypet-jmcai-skill-v1.1.0.zip`
+- `dist/comfypet-jmcai-skill-v1.2.0.zip`
 - `dist/checksums.txt`
 
 平台级分发细节见：

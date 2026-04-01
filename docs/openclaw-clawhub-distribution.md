@@ -48,9 +48,9 @@ openclaw skills install comfypet-jmcai-skill
 
 - `slug`: `comfypet-jmcai-skill`
 - `name`: `JMCAI Comfypet`
-- `version`: `1.1.0`
+- `version`: `1.2.0`
 - `tags`: `latest,comfyui,image,video,jmcai`
-- `changelog`: `Release 1.1.0`
+- `changelog`: `Release 1.2.0`
 
 ## 推荐发布命令
 
@@ -63,13 +63,13 @@ pwsh -File .\release\clawhub-publish.ps1 -RunDryRun
 ### 发布单个 skill
 
 ```bash
-clawhub publish ./skills/comfypet-jmcai-skill --slug comfypet-jmcai-skill --name "JMCAI Comfypet" --version 1.1.0 --tags latest,comfyui,image,video,jmcai --changelog "Release 1.1.0"
+clawhub publish ./skills/comfypet-jmcai-skill --slug comfypet-jmcai-skill --name "JMCAI Comfypet" --version 1.2.0 --tags latest,comfyui,image,video,jmcai --changelog "Release 1.2.0"
 ```
 
 ### 扫描并同步 skills 目录
 
 ```bash
-clawhub sync --root ./skills --all --tags latest,comfyui,image,video,jmcai --changelog "Release 1.1.0" --bump patch
+clawhub sync --root ./skills --all --tags latest,comfyui,image,video,jmcai --changelog "Release 1.2.0" --bump patch
 ```
 
 ## 当前仓库已就绪的内容

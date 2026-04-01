@@ -29,7 +29,7 @@
 
 如果平台只接受压缩包，先解压：
 
-- `dist/comfypet-jmcai-skill-v1.1.0.zip`
+- `dist/comfypet-jmcai-skill-v1.2.0.zip`
 
 上传时要确保根目录直接包含：
 

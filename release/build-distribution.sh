@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-version="${1:-1.1.0}"
+version="${1:-1.2.0}"
 repo_root="${2:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 skill_name="comfypet-jmcai-skill"
 payload_root="${repo_root}/skills/${skill_name}"

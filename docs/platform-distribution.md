@@ -58,7 +58,7 @@
 标准产物：
 
 - `dist/comfypet-jmcai-skill/`
-- `dist/comfypet-jmcai-skill-v1.1.0.zip`
+- `dist/comfypet-jmcai-skill-v1.2.0.zip`
 - `dist/checksums.txt`
 
 ## 发布者工作流
