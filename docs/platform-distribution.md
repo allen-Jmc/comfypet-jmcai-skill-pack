@@ -48,7 +48,7 @@
 - 当前支持两条正式路径：
   - GitHub 下载后本地安装
   - ClawHub 注册表发布与安装
-- `comfypet-jmcai-skill@1.1.0` 已在 ClawHub 首发发布。
+- `comfypet-jmcai-skill@1.2.0` 已在 ClawHub 首发发布。
 - 如果刚发布后短时间不可见，通常是 ClawHub 安全扫描仍在进行中。
 
 ## 推荐分发产物

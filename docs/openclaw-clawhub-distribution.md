@@ -40,7 +40,7 @@ openclaw skills install comfypet-jmcai-skill
 
 ## 当前发布状态
 
-- ClawHub 首发版本：`comfypet-jmcai-skill@1.1.0`
+- ClawHub 首发版本：`comfypet-jmcai-skill@1.2.0`
 - 发布结果：已完成首发 publish
 - 若 `clawhub inspect comfypet-jmcai-skill` 短时间返回“hidden while security scan is pending”，表示平台安全扫描尚未结束，等待几分钟后重试即可。
 
@@ -104,5 +104,5 @@ clawhub install comfypet-jmcai-skill
 
 ## 对外口径
 
-- “当前 OpenClaw 路线支持 GitHub 安装，且 `comfypet-jmcai-skill@1.1.0` 已发布到 ClawHub。”
+- “当前 OpenClaw 路线支持 GitHub 安装，且 `comfypet-jmcai-skill@1.2.0` 已发布到 ClawHub。”
 - “如果刚发布后短时间内尚不可见，通常是平台安全扫描未完成，可稍后再次安装或 inspect。”
