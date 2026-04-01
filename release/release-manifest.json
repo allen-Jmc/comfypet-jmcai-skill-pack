@@ -229,19 +229,6 @@
         "--changelog",
         "{clawhub_changelog}"
       ]
-    },
-    {
-      "name": "skillhub-publish",
-      "requires_auth": "skillhub",
-      "command": [
-        "skillhub",
-        "publish",
-        "./skills/comfypet-jmcai-skill",
-        "--version",
-        "{version}",
-        "--access",
-        "public"
-      ]
     }
   ]
 }
