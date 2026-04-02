@@ -94,7 +94,12 @@ try {
 }
 
 if ($doctorExitCode -ne 0) {
-    Write-Warning "Skill payload installed, but doctor reported issues. Open JMCAI desktop app and rerun 'python jmcai_skill.py doctor' in $targetDir."
+    Write-Warning "Skill payload installed, but doctor reported issues."
+    Write-Host "--------------------------------------------------------" -ForegroundColor Yellow
+    Write-Host "[HINT] This skill requires the JMCAI Desktop App to be running." -ForegroundColor Cyan
+    Write-Host "Download it here: https://github.com/allen-Jmc/comfypet-jmcai-Dist" -ForegroundColor Cyan
+    Write-Host "Please start the app and rerun 'python jmcai_skill.py doctor' in $targetDir." -ForegroundColor Cyan
+    Write-Host "--------------------------------------------------------" -ForegroundColor Yellow
 }
 
 Write-Host "Installed $skillName to $targetDir"

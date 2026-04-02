@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## v1.2.1
+
+- **UX/Docs**: 在 README、SKILL.md、安装脚本和 `doctor` 报错中全面强化了 JMCAI 桌面团依赖说明与下载引导。
+- **Fix**: 优化了网络请求异常时的报错信息，自动检测本地 Bridge 状态并提供修复链接。
+
 ## v1.2.0
 
 - **Feature**: 引入「双模驱动」架构，支持向下兼容地作为被 Agent 框架直接导入获取 `registry()` 配置的 Python 模块。

@@ -69,7 +69,10 @@ if ! (
   cd "${target_dir}"
   "${python_bin}" jmcai_skill.py --config config.json doctor
 ); then
-  echo "Warning: skill payload installed, but doctor reported issues. Open JMCAI desktop app and rerun 'python jmcai_skill.py doctor' in ${target_dir}." >&2
+  echo -e "\033[0;33mWarning: skill payload installed, but doctor reported issues.\033[0m" >&2
+  echo -e "\033[0;36m[HINT] This skill requires the JMCAI Desktop App to be running.\033[0m" >&2
+  echo -e "\033[0;36mDownload it here: https://github.com/allen-Jmc/comfypet-jmcai-Dist\033[0m" >&2
+  echo -e "\033[0;36mPlease start the app and rerun 'python jmcai_skill.py doctor' in ${target_dir}.\033[0m" >&2
 fi
 
 echo "Installed ${skill_name} to ${target_dir}"

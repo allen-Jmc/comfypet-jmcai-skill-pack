@@ -7,6 +7,14 @@
 
 JMCAI Comfypet Skill Pack 是给 OpenClaw、Codex、Claude Code 共用的独立 skill 仓。仓库根目录负责提供人类文档、安装脚本和验收记录；真正给 agent 安装的只有 `skills/comfypet-jmcai-skill/` 这个标准 skill payload。
 
+> [!IMPORTANT]
+> **前置要求 (Prerequisites)**: 
+> 本 Skill 必须配合 **JMCAI Comfypet 桌面客户端** 运行。
+> 请确保您已在本地或局域网内启动了桌面端，并开启了 Workflow Bridge。
+> 
+> - **官方发布页库 (下载桌面端)**: [https://github.com/allen-Jmc/comfypet-jmcai-Dist](https://github.com/allen-Jmc/comfypet-jmcai-Dist)
+> - **仓库主页**: [https://github.com/allen-Jmc/Comfypet-JMCAI](https://github.com/allen-Jmc/Comfypet-JMCAI)
+
 ## 文档导航
 
 - [安装指南](./docs/install-guide.md)

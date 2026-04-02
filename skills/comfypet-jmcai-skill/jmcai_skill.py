@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 VERSION = "1.2.0"
+DESKTOP_APP_URL = "https://github.com/allen-Jmc/comfypet-jmcai-Dist"
 DEFAULT_CONFIG = {
     "bridge_url": "http://127.0.0.1:32100",
     "request_timeout_ms": 15000,
@@ -206,10 +207,13 @@ def doctor_command(config: dict[str, Any]) -> dict[str, Any]:
     try:
         health = request_json(config, "GET", "/api/v1/health")
     except RequestFailure as error:
+        msg = error.message
+        if is_loopback_bridge(config):
+            msg += f"\n[HINT] JMCAI Desktop App might not be running. Download it at: {DESKTOP_APP_URL}"
         return {
             "status": "error",
             "bridge_url": config["bridge_url"],
-            "problems": [error.message],
+            "problems": [msg],
             "warnings": [],
         }
 
@@ -418,7 +422,10 @@ def request_json(
         message = payload.get("message") if isinstance(payload, dict) else None
         raise RequestFailure(str(message or f"Bridge HTTP {error.code}"), payload)
     except urllib.error.URLError as error:
-        raise RequestFailure(f"Cannot reach Workflow Bridge at {url}: {error.reason}", None)
+        msg = f"Cannot reach Workflow Bridge at {url}: {error.reason}"
+        if is_loopback_bridge(config):
+            msg += f" (Is JMCAI Desktop App running? Download: {DESKTOP_APP_URL})"
+        raise RequestFailure(msg, None)
 
 
 def request_bytes(config: dict[str, Any], path: str) -> tuple[bytes, dict[str, str]]:
@@ -438,7 +445,10 @@ def request_bytes(config: dict[str, Any], path: str) -> tuple[bytes, dict[str, s
         message = payload.get("message") if isinstance(payload, dict) else None
         raise RequestFailure(str(message or f"Bridge HTTP {error.code}"), payload)
     except urllib.error.URLError as error:
-        raise RequestFailure(f"Cannot reach Workflow Bridge at {url}: {error.reason}", None)
+        msg = f"Cannot reach Workflow Bridge at {url}: {error.reason}"
+        if is_loopback_bridge(config):
+            msg += f" (Is JMCAI Desktop App running? Download: {DESKTOP_APP_URL})"
+        raise RequestFailure(msg, None)
 
 
 def prepare_run_args(
