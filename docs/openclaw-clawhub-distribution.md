@@ -48,9 +48,9 @@ openclaw skills install comfypet-jmcai-skill
 
 - `slug`: `comfypet-jmcai-skill`
 - `name`: `JMCAI Comfypet`
-- `version`: `1.2.1`
+- `version`: `1.2.3`
 - `tags`: `latest,comfyui,image,video,jmcai`
-- `changelog`: `Release 1.2.1`
+- `changelog`: `Release 1.2.3: Fix hardcoded IP in config example to satisfy ClawHub static analysis`
 
 ## 推荐发布命令
 

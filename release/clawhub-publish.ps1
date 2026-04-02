@@ -1,7 +1,7 @@
 param(
-    [string]$Version = '1.2.1',
+    [string]$Version = '1.2.3',
     [string]$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path,
-    [string]$Changelog = 'Release 1.2.1',
+    [string]$Changelog = 'Release 1.2.3: Fix hardcoded IP in config example to satisfy ClawHub static analysis',
     [switch]$RunDryRun
 )
 

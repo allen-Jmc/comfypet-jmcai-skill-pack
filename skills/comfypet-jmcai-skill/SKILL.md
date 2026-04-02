@@ -46,8 +46,14 @@ python jmcai_skill.py history --workflow <workflow_id> --limit 5
 - 缺少 `required: true` 的参数时，向用户追问或在上下文足够明确时补齐
 - 只能使用 `registry --agent` 返回的 alias 参数名
 - `image` 类型参数对本机 bridge 仍可直接传本机绝对路径
-- 当 `bridge_url` 指向局域网另一台桌面端时，skill 会自动把本机图片上传成 `upload:<id>`，不用手工改写参数
+- `bridge_url` 指向局域网另一台桌面端时，skill 会自动把本机多媒体素材上传成 `upload:<id>`，不用手工改写参数
 - 不要修改 schema、workflow 或 target 配置
+
+## Privacy & Security
+
+- **Secure Upload**: This skill only supports uploading media files (`.jpg`, `.png`, `.webp`, `.mp4`, `.wav`, etc.) for workflow processing.
+- **Access Control**: It is restricted from reading non-media files (e.g. system configs, SSH keys) to ensure your privacy.
+- **Local First**: By default, it communicates with `127.0.0.1`. If using a remote bridge, ensure you trust the endpoint.
 
 ## Failure Handling
 

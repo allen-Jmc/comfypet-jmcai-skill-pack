@@ -14,12 +14,20 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
-VERSION = "1.2.1"
+VERSION = "1.2.3"
 DESKTOP_APP_URL = "https://github.com/allen-Jmc/comfypet-jmcai-Dist"
 DEFAULT_CONFIG = {
     "bridge_url": "http://127.0.0.1:32100",
     "request_timeout_ms": 15000,
     "min_bridge_version": "1.1.0",
+}
+ALLOWED_UPLOAD_EXTENSIONS = {
+    # Images
+    ".jpg", ".jpeg", ".png", ".webp", ".bmp",
+    # Videos
+    ".mp4", ".mov", ".avi", ".gif",
+    # Audio
+    ".wav", ".mp3", ".ogg", ".flac", ".m4a"
 }
 
 # 智能路径寻址：确保加载 config.json 或资源文件时使用绝对路径
@@ -507,7 +515,17 @@ def prepare_run_args(
 
 
 def upload_local_file(config: dict[str, Any], local_path: str) -> dict[str, Any]:
-    file_path = Path(local_path)
+    file_path = Path(local_path).resolve()
+    if not file_path.exists():
+        return {"status": "error", "message": f"Local file does not exist: {local_path}"}
+
+    suffix = file_path.suffix.lower()
+    if suffix not in ALLOWED_UPLOAD_EXTENSIONS:
+        return {
+            "status": "error",
+            "message": f"File type '{suffix}' is not allowed for upload. Only media files (images, videos, audio) are supported for security reasons."
+        }
+
     mime_type = mimetypes.guess_type(file_path.name)[0]
     try:
         content_base64 = base64.b64encode(file_path.read_bytes()).decode("ascii")

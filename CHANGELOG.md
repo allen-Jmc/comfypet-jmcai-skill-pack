@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## [1.2.3] - 2026-04-02
+### Fixed
+- Security: Changed `127.0.0.1` to `localhost` in `config.example.json` to satisfy ClawHub static analysis.
+
+## [1.2.2] - 2026-04-02
+### Added
+- Security: Added `ALLOWED_UPLOAD_EXTENSIONS` whitelist to restrict file uploads to image, video, and audio formats (fixing ClawHub "Suspicious" warnings).
+- Security: Added path existence and type validation in `upload_local_file`.
+- Docs: Added Privacy & Security section to `SKILL.md`.
+
 ## v1.2.1
 
 - **UX/Docs**: 在 README、SKILL.md、安装脚本和 `doctor` 报错中全面强化了 JMCAI 桌面团依赖说明与下载引导。
