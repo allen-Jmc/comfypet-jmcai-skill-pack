@@ -14,7 +14,7 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
-VERSION = "1.2.0"
+VERSION = "1.2.1"
 DESKTOP_APP_URL = "https://github.com/allen-Jmc/comfypet-jmcai-Dist"
 DEFAULT_CONFIG = {
     "bridge_url": "http://127.0.0.1:32100",

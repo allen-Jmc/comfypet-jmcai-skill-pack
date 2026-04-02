@@ -1,7 +1,7 @@
 param(
-    [string]$Version = '1.2.0',
+    [string]$Version = '1.2.1',
     [string]$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path,
-    [string]$Changelog = 'Release 1.2.0',
+    [string]$Changelog = 'Release 1.2.1',
     [switch]$RunDryRun
 )
 
