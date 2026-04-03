@@ -1,7 +1,7 @@
 param(
-    [string]$Version = '1.2.3',
+    [string]$Version = '1.2.4',
     [string]$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path,
-    [string]$Changelog = 'Release 1.2.3: Fix hardcoded IP in config example to satisfy ClawHub static analysis',
+    [string]$Changelog = 'Release 1.2.4: Improve remote upload reliability, structured timeout errors, and multi-image regression coverage',
     [switch]$RunDryRun
 )
 

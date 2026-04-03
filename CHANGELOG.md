@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## [1.2.4] - 2026-04-03
+### Added
+- Reliability: Added stage-specific network settings `upload_timeout_ms`, `download_timeout_ms`, `network_retry_count`, and `retry_backoff_ms` for remote bridge transfers.
+- Docs: Added Windows multi-image workflow regression checklist covering local/remote dual-image runs, same-image upload reuse, and negative cases.
+
+### Changed
+- Reliability: Remote upload and output download now use stage-specific timeouts and limited retry handling instead of sharing a single request timeout.
+- UX: `status` and `history` may now return optional `warnings` when remote outputs were generated successfully but could not be downloaded back to the current machine.
+
+### Fixed
+- Reliability: Remote upload timeouts now return structured JSON errors with actionable details instead of raw Python tracebacks.
+- Validation: Confirmed multi-image workflows correctly reuse a single upload token when two image aliases point to the same local file.
+
 ## [1.2.3] - 2026-04-02
 ### Fixed
 - Security: Changed `127.0.0.1` to `localhost` in `config.example.json` to satisfy ClawHub static analysis.

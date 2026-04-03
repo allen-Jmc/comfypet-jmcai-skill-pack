@@ -104,7 +104,7 @@ python jmcai_skill.py --version
 期望返回：
 
 ```text
-jmcai-skill 1.2.1
+jmcai-skill 1.2.4
 ```
 
 ### 2. 验证 bridge
@@ -127,16 +127,42 @@ python jmcai_skill.py registry --agent
 
 默认配置文件为 `config.json`。若不存在，会从 `config.example.json` 复制生成。
 
-当前固定配置项：
+当前可配置项：
 
 - `bridge_url`
 - `request_timeout_ms`
+- `upload_timeout_ms`
+- `download_timeout_ms`
+- `network_retry_count`
+- `retry_backoff_ms`
 - `min_bridge_version`
+
+推荐理解方式：
+
+- `request_timeout_ms`：普通 JSON 请求超时，例如 `doctor`、`registry`、`status`、`history`
+- `upload_timeout_ms`：远程 bridge 自动上传本地媒体文件时的超时
+- `download_timeout_ms`：远程 bridge 输出结果自动下载回本机时的超时
+- `network_retry_count`：远程上传和结果下载的额外重试次数
+- `retry_backoff_ms`：每次重试前的等待时间
+
+默认值示例：
+
+```json
+{
+  "bridge_url": "http://localhost:32100",
+  "request_timeout_ms": 15000,
+  "upload_timeout_ms": 60000,
+  "download_timeout_ms": 120000,
+  "network_retry_count": 1,
+  "retry_backoff_ms": 1500,
+  "min_bridge_version": "1.1.0"
+}
+```
 
 默认 bridge 地址示例为：
 
 ```text
-http://127.0.0.1:32100
+http://localhost:32100
 ```
 
 如果 agent 和桌面端不在同一台机器，可以把 `bridge_url` 改成局域网内桌面端主机地址，例如：
@@ -161,6 +187,12 @@ http://192.168.1.23:32100
 - JMCAI Comfypet 桌面应用是否已启动
 - Workflow Bridge 是否正在监听你配置的 `bridge_url`
 - 是否至少有一个已启用 workflow 被公开
+
+如果只有远程大图上传容易失败，而 `doctor` 正常：
+
+- 优先增大 `upload_timeout_ms`
+- 再检查局域网或异地网络的上行带宽和延迟
+- 不要仅靠无限增大 `request_timeout_ms` 解决上传问题
 
 ### `python jmcai_skill.py --version` 失败
 

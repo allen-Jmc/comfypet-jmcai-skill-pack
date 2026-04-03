@@ -99,6 +99,7 @@ python jmcai_skill.py status --run-id <run_id>
 - `error`
 
 成功时，读取 `outputs`。
+如果返回了 `warnings`，说明任务本身可能已经成功，但自动下载到本机的某一步出现了网络或本地写入问题。
 
 ## 6. 读取历史
 
@@ -133,6 +134,7 @@ python jmcai_skill.py history --workflow smoke-workflow --limit 5
 - `media_kind`：`image | video | file`
 - `file_name`：文件名
 - `mime_type`：可选 MIME 类型
+- `warnings`：可选；当远程任务生成成功，但输出回传到本机失败时，会给出可执行告警
 
 ## 参数使用规则
 
@@ -170,6 +172,29 @@ python jmcai_skill.py history --workflow smoke-workflow --limit 5
 - 桌面端是否已启动
 - `bridge_url` 是否正确
 - 目标主机的 `32100` 端口是否可达，或本机 `127.0.0.1:32100` 是否被其他程序占用或未监听
+
+### `Timed out while uploading ...`
+
+说明远程 bridge 的上传阶段超时了，常见于：
+
+- 图片较大
+- 当前网络上行带宽较低
+- 远程桌面端临时无响应
+
+优先处理：
+
+- 增大 `upload_timeout_ms`
+- 保持 `request_timeout_ms` 用于普通查询，不要把所有阶段都绑到同一个超时上
+- 确认远程 bridge 地址可访问，再重试 `run`
+
+### `status` 返回 `success`，但同时带有 `warnings`
+
+说明生成已经成功，但某些输出在自动下载回本机时失败了。  
+优先处理：
+
+- 增大 `download_timeout_ms`
+- 检查本机临时目录权限和磁盘空间
+- 重新调用一次 `status` 或 `history`，让 skill 再次尝试下载输出
 
 ### `未知参数`
 

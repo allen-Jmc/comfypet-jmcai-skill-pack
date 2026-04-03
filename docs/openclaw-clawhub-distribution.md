@@ -40,17 +40,17 @@ openclaw skills install comfypet-jmcai-skill
 
 ## 当前发布状态
 
-- ClawHub 首发版本：`comfypet-jmcai-skill@1.2.1`
-- 发布结果：已完成首发 publish
+- ClawHub 当前版本：`comfypet-jmcai-skill@1.2.4`
+- 发布结果：已完成最新 patch publish
 - 若 `clawhub inspect comfypet-jmcai-skill` 短时间返回“hidden while security scan is pending”，表示平台安全扫描尚未结束，等待几分钟后重试即可。
 
 ## 固定发布参数
 
 - `slug`: `comfypet-jmcai-skill`
 - `name`: `JMCAI Comfypet`
-- `version`: `1.2.3`
+- `version`: `1.2.4`
 - `tags`: `latest,comfyui,image,video,jmcai`
-- `changelog`: `Release 1.2.3: Fix hardcoded IP in config example to satisfy ClawHub static analysis`
+- `changelog`: `Release 1.2.4: Improve remote upload reliability, structured timeout errors, and multi-image regression coverage`
 
 ## 推荐发布命令
 
@@ -63,13 +63,13 @@ pwsh -File .\release\clawhub-publish.ps1 -RunDryRun
 ### 发布单个 skill
 
 ```bash
-clawhub publish ./skills/comfypet-jmcai-skill --slug comfypet-jmcai-skill --name "JMCAI Comfypet" --version 1.2.1 --tags latest,comfyui,image,video,jmcai --changelog "Release 1.2.1"
+clawhub publish ./skills/comfypet-jmcai-skill --slug comfypet-jmcai-skill --name "JMCAI Comfypet" --version 1.2.4 --tags latest,comfyui,image,video,jmcai --changelog "Release 1.2.4"
 ```
 
 ### 扫描并同步 skills 目录
 
 ```bash
-clawhub sync --root ./skills --all --tags latest,comfyui,image,video,jmcai --changelog "Release 1.2.1" --bump patch
+clawhub sync --root ./skills --all --tags latest,comfyui,image,video,jmcai --changelog "Release 1.2.4" --bump patch
 ```
 
 ## 当前仓库已就绪的内容
@@ -104,5 +104,5 @@ clawhub install comfypet-jmcai-skill
 
 ## 对外口径
 
-- “当前 OpenClaw 路线支持 GitHub 安装，且 `comfypet-jmcai-skill@1.2.1` 已发布到 ClawHub。”
+- “当前 OpenClaw 路线支持 GitHub 安装，且 `comfypet-jmcai-skill@1.2.4` 已发布到 ClawHub。”
 - “如果刚发布后短时间内尚不可见，通常是平台安全扫描未完成，可稍后再次安装或 inspect。”

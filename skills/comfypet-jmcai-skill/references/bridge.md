@@ -30,6 +30,7 @@
 - `media_kind`: `image | video | file`
 - `file_name`: 输出文件名
 - `mime_type`: 可选 MIME 类型
+- `warnings`: 可选；远程任务已成功，但自动下载输出到当前机器失败时返回
 
 对图片 workflow，优先读取 `media_kind == "image"` 的项。  
 对视频 workflow，优先读取 `media_kind == "video"` 的项。

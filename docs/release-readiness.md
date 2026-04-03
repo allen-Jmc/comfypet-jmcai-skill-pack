@@ -16,6 +16,7 @@
 - [Windows Codex 验收记录](../acceptance/windows-codex.md)
 - [Windows Claude Code 验收记录](../acceptance/windows-claude-code.md)
 - [Windows OpenClaw 验收记录](../acceptance/windows-openclaw.md)
+- [Windows 多图 Workflow 回归清单](../acceptance/windows-multi-image-regression.md)
 
 ## 当前完成情况
 
@@ -32,6 +33,12 @@
   - 图片 workflow
   - 视频 workflow
   - `history`
+- Windows 多图回归清单已覆盖：
+  - 本地双图 workflow
+  - 远程双图上传
+  - 同图 upload token 复用
+  - 第二张图缺失路径拦截
+  - 第二张图非白名单拦截
 
 ## 当前交付真相
 
@@ -56,7 +63,7 @@
 - Skill 仓：
   - `python -m py_compile ...`
   - 新 skill 子路径中的 `python jmcai_skill.py --version`
-  - `clawhub publish` 首发成功：`comfypet-jmcai-skill@1.2.1`
+  - `clawhub publish` 最新版本：`comfypet-jmcai-skill@1.2.4`
 
 ## 当前阻塞
 
