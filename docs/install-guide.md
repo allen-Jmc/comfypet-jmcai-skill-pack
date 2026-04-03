@@ -12,8 +12,7 @@
 
 - [README](../README.md)
 - [使用指南](./usage-guide.md)
-- [平台分发总览](./platform-distribution.md)
-- [交付状态说明](./release-readiness.md)
+- [GitHub Releases](https://github.com/allen-Jmc/comfypet-jmcai-skill-pack/releases)
 
 ## 安装前检查
 
@@ -50,6 +49,25 @@ https://github.com/allen-Jmc/comfypet-jmcai-skill-pack/tree/main/skills/comfypet
 ### Claude Code / OpenClaw
 
 当前仍以 clone 或下载 ZIP 后执行安装脚本为主。
+
+## GitHub Releases 下载
+
+如果你不想直接 clone 仓库，可以从 [GitHub Releases](https://github.com/allen-Jmc/comfypet-jmcai-skill-pack/releases) 下载预构建产物。
+
+常用资产：
+
+- `comfypet-jmcai-skill-v1.2.4.zip`
+- `checksums.txt`
+
+解压后请确认根目录直接包含 `SKILL.md`、`jmcai_skill.py`、`agents/`、`references/`、`assets/` 和 `config.example.json`。
+
+## OpenClaw / ClawHub 安装
+
+如果你已经安装 `clawhub` CLI，可以直接：
+
+```bash
+clawhub install comfypet-jmcai-skill
+```
 
 ## Clone / ZIP 安装
 
@@ -168,7 +186,7 @@ http://localhost:32100
 如果 agent 和桌面端不在同一台机器，可以把 `bridge_url` 改成局域网内桌面端主机地址，例如：
 
 ```text
-http://192.168.1.23:32100
+http://bridge-host-or-lan-address:32100
 ```
 
 ## 旧目录迁移规则
