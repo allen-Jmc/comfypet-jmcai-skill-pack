@@ -51,4 +51,4 @@
 - Standardized install paths for Codex, Claude Code, and OpenClaw.
 - Added migration handling from the legacy `jmcai-workflow-skill` directory name.
 - Added root-level install and update scripts that sync only the skill payload and preserve `config.json`.
-- Published install, update, troubleshooting, and release-readiness documentation.
+- Published install, update, troubleshooting, and delivery-status documentation.

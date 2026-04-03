@@ -12,7 +12,6 @@
 
 - [README](../README.md)
 - [安装指南](./install-guide.md)
-- [交付状态说明](./release-readiness.md)
 
 ## 使用前提
 
@@ -64,7 +63,7 @@ python jmcai_skill.py registry --agent
 ## 3. 提交一次图片 workflow
 
 ```powershell
-python jmcai_skill.py run --workflow smoke-workflow --args "{\"prompt_1\":\"a clean product photo\",\"image_6\":\"C:\\Users\\cdall\\Pictures\\input.png\"}"
+python jmcai_skill.py run --workflow smoke-workflow --args "{\"prompt_1\":\"a clean product photo\",\"image_6\":\"/absolute/path/to/input.png\"}"
 ```
 
 说明：
@@ -120,7 +119,7 @@ python jmcai_skill.py history --workflow smoke-workflow --limit 5
 ```json
 [
   {
-    "path": "C:\\Users\\cdall\\AppData\\Roaming\\...\\smoke-video-workflow_01.mp4",
+    "path": "/absolute/path/to/smoke-video-workflow_01.mp4",
     "media_kind": "video",
     "file_name": "smoke-video-workflow_01.mp4",
     "mime_type": "video/mp4"

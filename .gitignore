@@ -3,3 +3,10 @@ __pycache__/
 dist/
 config.json
 *.pyc
+*.local.json
+*.tmp.json
+tmp/
+temp/
+test-output/
+screenshots/
+acceptance-screenshots/

@@ -3,31 +3,22 @@
 - 仓库名：`comfypet-jmcai-skill-pack`
 - 正式 skill 名：`comfypet-jmcai-skill`
 - 正式可安装 skill 子路径：`skills/comfypet-jmcai-skill/`
-- GitHub 仓库：`https://github.com/allen-Jmc/comfypet-jmcai-skill-pack`
+- GitHub 仓库：[allen-Jmc/comfypet-jmcai-skill-pack](https://github.com/allen-Jmc/comfypet-jmcai-skill-pack)
 
-JMCAI Comfypet Skill Pack 是给 OpenClaw、Codex、Claude Code 共用的独立 skill 仓。仓库根目录负责提供人类文档、安装脚本和验收记录；真正给 agent 安装的只有 `skills/comfypet-jmcai-skill/` 这个标准 skill payload。
+JMCAI Comfypet Skill Pack 是给 OpenClaw、Codex、Claude Code 共用的独立 skill 仓。公开仓只保留用户安装和使用 skill 所需的最小内容；真正给 agent 安装的 payload 是 `skills/comfypet-jmcai-skill/`。
 
 > [!IMPORTANT]
-> **前置要求 (Prerequisites)**: 
 > 本 Skill 必须配合 **JMCAI Comfypet 桌面客户端** 运行。
-> 请确保您已在本地或局域网内启动了桌面端，并开启了 Workflow Bridge。
-> 
-> - **官方发布页库 (下载桌面端)**: [https://github.com/allen-Jmc/comfypet-jmcai-Dist](https://github.com/allen-Jmc/comfypet-jmcai-Dist)
-> - **仓库主页**: [https://github.com/allen-Jmc/Comfypet-JMCAI](https://github.com/allen-Jmc/Comfypet-JMCAI)
+> 请先启动桌面端并开启 Workflow Bridge。
+>
+> - 桌面端下载：[allen-Jmc/comfypet-jmcai-Dist](https://github.com/allen-Jmc/comfypet-jmcai-Dist)
+> - 项目主页：[allen-Jmc/Comfypet-JMCAI](https://github.com/allen-Jmc/Comfypet-JMCAI)
 
-## 文档导航
+## 文档入口
 
 - [安装指南](./docs/install-guide.md)
 - [使用指南](./docs/usage-guide.md)
-- [平台分发总览](./docs/platform-distribution.md)
-- [OpenAI / Codex 分发](./docs/openai-codex-distribution.md)
-- [Claude Code 分发](./docs/claude-code-distribution.md)
-- [OpenClaw / ClawHub 分发](./docs/openclaw-clawhub-distribution.md)
-- [交付状态说明](./docs/release-readiness.md)
-- [Windows Codex 验收记录](./acceptance/windows-codex.md)
-- [Windows Claude Code 验收记录](./acceptance/windows-claude-code.md)
-- [Windows OpenClaw 验收记录](./acceptance/windows-openclaw.md)
-- [Windows 多图 Workflow 回归清单](./acceptance/windows-multi-image-regression.md)
+- [GitHub Releases](https://github.com/allen-Jmc/comfypet-jmcai-skill-pack/releases)
 
 ## 功能范围
 
@@ -42,8 +33,9 @@ JMCAI Comfypet Skill Pack 是给 OpenClaw、Codex、Claude Code 共用的独立 
 ```text
 CHANGELOG.md
 README.md
-acceptance/
 docs/
+  install-guide.md
+  usage-guide.md
 install/
 skills/
   comfypet-jmcai-skill/
@@ -56,7 +48,7 @@ skills/
     config.example.json
 ```
 
-## GitHub 安装
+## 安装方式
 
 ### Codex
 
@@ -68,49 +60,9 @@ https://github.com/allen-Jmc/comfypet-jmcai-skill-pack/tree/main/skills/comfypet
 
 注意：安装目标是 `skills/comfypet-jmcai-skill/`，不是整个仓库根目录。
 
-### Claude Code / OpenClaw
+### Clone / ZIP 安装
 
-当前以 clone 或下载 ZIP 后执行安装脚本为主。
-
-## 平台分发与发布产物
-
-- OpenAI / Codex：GitHub 分发 + ChatGPT Skills 页面上传 / 工作区分享
-- Claude Code：GitHub 分发 + 官方 skills 目录安装 / 项目级共享
-- OpenClaw：GitHub 分发 + ClawHub 已发布
-
-发布者若要生成正式分发产物，请在仓库根目录执行：
-
-### Windows
-
-```powershell
-pwsh -File .\release\build-distribution.ps1
-```
-
-### macOS / Linux
-
-```bash
-./release/build-distribution.sh
-```
-
-产物会生成到 `dist/`：
-
-- `dist/comfypet-jmcai-skill/`
-- `dist/comfypet-jmcai-skill-v1.2.4.zip`
-- `dist/checksums.txt`
-
-平台级分发细节见：
-
-- [平台分发总览](./docs/platform-distribution.md)
-- [OpenAI / Codex 分发](./docs/openai-codex-distribution.md)
-- [Claude Code 分发](./docs/claude-code-distribution.md)
-- [OpenClaw / ClawHub 分发](./docs/openclaw-clawhub-distribution.md)
-
-当前 OpenClaw 侧最新注册表版本：`comfypet-jmcai-skill@1.2.4`。
-若 ClawHub 刚发布后短时间内还不可见，通常是平台安全扫描尚未完成，可稍后重试 `clawhub install comfypet-jmcai-skill` 或 `clawhub inspect comfypet-jmcai-skill`。
-
-## Clone / ZIP 安装
-
-### Windows
+Windows：
 
 ```powershell
 pwsh -File .\install\install.ps1 -Agent codex
@@ -118,7 +70,7 @@ pwsh -File .\install\install.ps1 -Agent claude
 pwsh -File .\install\install.ps1 -Agent openclaw
 ```
 
-### macOS / Linux
+macOS / Linux：
 
 ```bash
 ./install/install.sh codex
@@ -126,12 +78,22 @@ pwsh -File .\install\install.ps1 -Agent openclaw
 ./install/install.sh openclaw
 ```
 
-安装脚本会：
+### OpenClaw / ClawHub
 
-- 同步 `skills/comfypet-jmcai-skill/` 到目标技能目录
-- 迁移旧目录 `jmcai-workflow-skill` 到新目录 `comfypet-jmcai-skill`
-- 保留已有 `config.json`
-- 自动执行 `doctor`
+如果你已经安装 `clawhub`，可以直接：
+
+```bash
+clawhub install comfypet-jmcai-skill
+```
+
+## 发布产物下载
+
+预构建产物统一放在 [GitHub Releases](https://github.com/allen-Jmc/comfypet-jmcai-skill-pack/releases)。
+
+标准资产名称：
+
+- `comfypet-jmcai-skill-v1.2.4.zip`
+- `checksums.txt`
 
 ## CLI
 
@@ -150,19 +112,19 @@ CLI 输出始终为机器可读 JSON，字段统一为 `snake_case`。
 
 ## 默认安装目录
 
-- Codex: `~/.codex/skills/comfypet-jmcai-skill`
-- Claude Code: `~/.claude/skills/comfypet-jmcai-skill`
-- OpenClaw: `~/.openclaw/workspace/skills/comfypet-jmcai-skill`
+- Codex：`~/.codex/skills/comfypet-jmcai-skill`
+- Claude Code：`~/.claude/skills/comfypet-jmcai-skill`
+- OpenClaw：`~/.openclaw/workspace/skills/comfypet-jmcai-skill`
 
 ## 更新
 
-### Windows
+Windows：
 
 ```powershell
 pwsh -File .\install\update.ps1 -Agent codex
 ```
 
-### macOS / Linux
+macOS / Linux：
 
 ```bash
 ./install/update.sh codex
@@ -175,4 +137,4 @@ pwsh -File .\install\update.ps1 -Agent codex
 - `doctor` 失败：先确认桌面端已启动，并检查 Workflow Bridge 是否可达
 - `python jmcai_skill.py` 不可用：确认是在 skill 安装目录内执行，且使用 Python 3
 - 看不到 workflow：确认 workflow 已启用，且默认 target 当前可用
-- 图片/视频任务失败：优先看 `status` 或 `history` 返回的 `error_message`
+- 图片或视频任务失败：优先看 `status` 或 `history` 返回的 `error_message`

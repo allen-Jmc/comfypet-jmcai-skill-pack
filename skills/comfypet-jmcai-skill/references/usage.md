@@ -15,7 +15,7 @@
 示例：
 
 ```bash
-python jmcai_skill.py run --workflow demo-image --args '{"prompt_1":"a clean product photo","image_6":"C:\\Users\\name\\Pictures\\input.png"}'
+python jmcai_skill.py run --workflow demo-image --args '{"prompt_1":"a clean product photo","image_6":"/absolute/path/to/input.png"}'
 ```
 
 ## 视频 workflow
