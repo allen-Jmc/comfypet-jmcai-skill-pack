@@ -94,6 +94,7 @@ pwsh -File .\install\install.ps1 -Agent openclaw
 - 将 `skills/comfypet-jmcai-skill/` 同步到目标技能目录
 - 检查旧目录 `jmcai-workflow-skill`，并在适合时迁移到新目录 `comfypet-jmcai-skill`
 - 保留已有的 `config.json`
+- 自动补齐缺失配置，并把过低或非法的 `min_bridge_version` 迁移到当前硬性最低值 `1.2.0`
 - 自动执行一次 `doctor`
 - 如果桌面端暂未启动，安装仍会完成，但会输出需要稍后重跑 `doctor` 的提醒
 
@@ -155,10 +156,15 @@ python jmcai_skill.py registry --agent
 - `retry_backoff_ms`
 - `min_bridge_version`
 
+说明：
+
+- `min_bridge_version` 只能保持 `1.2.0` 或更高；运行时不会接受比当前 skill 硬性最低版本更低的值
+- 安装/更新脚本保留已有 `config.json` 时，也会自动把过低或非法的 `min_bridge_version` 修正为 `1.2.0`
+
 推荐理解方式：
 
 - `request_timeout_ms`：普通 JSON 请求超时，例如 `doctor`、`registry`、`status`、`history`
-- `upload_timeout_ms`：远程 bridge 自动上传本地媒体文件时的超时
+- `upload_timeout_ms`：远程 bridge 自动上传本地资产文件时的超时
 - `download_timeout_ms`：远程 bridge 输出结果自动下载回本机时的超时
 - `network_retry_count`：远程上传和结果下载的额外重试次数
 - `retry_backoff_ms`：每次重试前的等待时间
@@ -173,7 +179,7 @@ python jmcai_skill.py registry --agent
   "download_timeout_ms": 120000,
   "network_retry_count": 1,
   "retry_backoff_ms": 1500,
-  "min_bridge_version": "1.1.0"
+  "min_bridge_version": "1.2.0"
 }
 ```
 
@@ -188,6 +194,9 @@ http://localhost:32100
 ```text
 http://bridge-host-or-lan-address:32100
 ```
+
+远程 bridge 场景下，skill 会自动上传 schema 中声明为 `image | mask | video | audio | file` 的本机资产路径。  
+其中 `file` 类型仍保持窄白名单，仅覆盖常见 workflow 资产格式，不支持任意本地文件外传。
 
 ## 旧目录迁移规则
 
@@ -206,7 +215,7 @@ http://bridge-host-or-lan-address:32100
 - Workflow Bridge 是否正在监听你配置的 `bridge_url`
 - 是否至少有一个已启用 workflow 被公开
 
-如果只有远程大图上传容易失败，而 `doctor` 正常：
+如果只有远程资产上传容易失败，而 `doctor` 正常：
 
 - 优先增大 `upload_timeout_ms`
 - 再检查局域网或异地网络的上行带宽和延迟

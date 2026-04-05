@@ -81,13 +81,20 @@ if ($backupConfig) {
 
 $pythonCommand = Resolve-PythonCommand
 $pythonExe = $pythonCommand.Executable
-$pythonArgs = @($pythonCommand.Arguments)
-$pythonArgs += @('jmcai_skill.py', '--config', 'config.json', 'doctor')
+$normalizeArgs = @($pythonCommand.Arguments)
+$normalizeArgs += @('-c', "import jmcai_skill; jmcai_skill.write_normalized_config_file('config.json')")
+$doctorArgs = @($pythonCommand.Arguments)
+$doctorArgs += @('jmcai_skill.py', '--config', 'config.json', 'doctor')
 
 Push-Location $targetDir
 $doctorExitCode = 0
 try {
-    & $pythonExe @pythonArgs
+    & $pythonExe @normalizeArgs
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed to normalize config.json in $targetDir"
+    }
+
+    & $pythonExe @doctorArgs
     $doctorExitCode = $LASTEXITCODE
 } finally {
     Pop-Location

@@ -6,7 +6,7 @@
 
 ## 用途
 
-- 说明正确调用顺序、图片和视频 workflow 的最小调用方式，以及运行结果应该怎么看。
+- 说明正确调用顺序、图片、视频和资产输入 workflow 的最小调用方式，以及运行结果应该怎么看。
 
 ## 关联文档
 
@@ -69,7 +69,7 @@ python jmcai_skill.py run --workflow smoke-workflow --args "{\"prompt_1\":\"a cl
 说明：
 
 - `args` 只能使用 `registry --agent` 返回的 alias 字段
-- 本机 bridge 场景下，`image` 参数可直接使用本机绝对路径
+- 本机 bridge 场景下，`image | mask | video | audio | file` 参数都可直接使用本机绝对路径
 - 局域网远程 bridge 场景下，仍然传当前机器的本机绝对路径，skill 会自动上传并改写成 `upload:<id>`
 - 如果 workflow 配置了默认 target，可以不传 `--target`
 
@@ -84,7 +84,19 @@ python jmcai_skill.py run --workflow smoke-video-workflow --args "{\"prompt_1\":
 - `registry --agent` 返回的 `output_modalities`
 - `status` / `history` 返回的 `outputs[*].media_kind`
 
-## 5. 查询运行状态
+## 5. 提交一次带音频或文件输入的 workflow
+
+```powershell
+python jmcai_skill.py run --workflow demo-audio-workflow --args "{\"prompt_1\":\"clone this voice\",\"audio_3\":\"C:\\absolute\\path\\to\\reference.wav\"}"
+```
+
+说明：
+
+- 远程 bridge 会自动上传 `audio`、`video`、`mask`、`file` 等资产字段，不需要手工先换成 `upload:<id>`
+- `file` 类型远程自动上传只覆盖常见 workflow 资产格式，例如媒体文件、字幕文件和常见文档资产
+- `registry --agent` 返回的 schema 现在也会包含 `step`，方便上层 agent 做更完整的数值约束展示
+
+## 6. 查询运行状态
 
 ```powershell
 python jmcai_skill.py status --run-id <run_id>
@@ -100,7 +112,7 @@ python jmcai_skill.py status --run-id <run_id>
 成功时，读取 `outputs`。
 如果返回了 `warnings`，说明任务本身可能已经成功，但自动下载到本机的某一步出现了网络或本地写入问题。
 
-## 6. 读取历史
+## 7. 读取历史
 
 ```powershell
 python jmcai_skill.py history --workflow smoke-workflow --limit 5
@@ -140,8 +152,9 @@ python jmcai_skill.py history --workflow smoke-workflow --limit 5
 - 只能填写已暴露 alias 参数
 - 不能自己构造 `node_id.field` 参数
 - `required: true` 的参数必须补齐
-- `choices`、`min`、`max` 会继续由 bridge 在主应用侧做硬校验
-- `image` 类型始终传当前机器上的本机绝对路径；远程 bridge 会由 skill 自动上传
+- `choices`、`min`、`max`、`step` 会继续由 bridge 在主应用侧做硬校验
+- `image | mask | video | audio | file` 类型始终传当前机器上的本机绝对路径；远程 bridge 会由 skill 自动上传
+- `file` 类型远程自动上传只覆盖白名单内的常见 workflow 资产格式
 
 ## 不支持的事情
 
@@ -176,7 +189,7 @@ python jmcai_skill.py history --workflow smoke-workflow --limit 5
 
 说明远程 bridge 的上传阶段超时了，常见于：
 
-- 图片较大
+- 资产文件较大
 - 当前网络上行带宽较低
 - 远程桌面端临时无响应
 
@@ -203,3 +216,11 @@ python jmcai_skill.py history --workflow smoke-workflow --limit 5
 ### `缺少必填参数`
 
 说明 workflow 需要的 exposed args 没传齐。
+
+### `File type '...' is not allowed for File input.`
+
+说明当前传入的本地文件不在 skill 的安全白名单内。  
+这通常意味着：
+
+- 当前 workflow 的 `file` 字段需要更明确的文件类型约束
+- 你传入了偏系统配置类的本地文件

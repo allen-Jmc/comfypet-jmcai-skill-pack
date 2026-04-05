@@ -24,6 +24,7 @@ JMCAI Comfypet Skill Pack 是给 OpenClaw、Codex、Claude Code 共用的独立 
 
 - 查询当前可供 agent 调用的 workflows
 - 读取安全 alias schema 与 agent metadata
+- 在远程 bridge 场景下自动上传本机资产输入，并改写成 `upload:<id>`
 - 提交运行任务并轮询状态
 - 读取历史记录
 - 执行本地自检，确认 bridge、版本与默认 target 状态
@@ -78,6 +79,8 @@ macOS / Linux：
 ./install/install.sh openclaw
 ```
 
+安装脚本会保留已有 `config.json`，同时自动补齐缺失配置，并把过低或非法的 `min_bridge_version` 提升到当前硬性最低值 `1.2.0`。
+
 ### OpenClaw / ClawHub
 
 如果你已经安装 `clawhub`，可以直接：
@@ -131,10 +134,11 @@ macOS / Linux：
 ```
 
 更新脚本会尝试 `git pull --ff-only`，然后重新同步 skill 子目录并执行 `doctor`。
+如果旧配置里仍保留 `min_bridge_version: 1.1.0` 之类的历史值，更新时也会自动迁移到 `1.2.0`。
 
 ## 排错
 
 - `doctor` 失败：先确认桌面端已启动，并检查 Workflow Bridge 是否可达
 - `python jmcai_skill.py` 不可用：确认是在 skill 安装目录内执行，且使用 Python 3
 - 看不到 workflow：确认 workflow 已启用，且默认 target 当前可用
-- 图片或视频任务失败：优先看 `status` 或 `history` 返回的 `error_message`
+- 图片、视频或资产输入任务失败：优先看 `status` 或 `history` 返回的 `error_message`

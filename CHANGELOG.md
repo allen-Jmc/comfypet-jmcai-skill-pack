@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Added
+- Runtime: Remote bridge auto-upload now covers `image`, `mask`, `video`, `audio`, and guarded `file` schema fields instead of only `image`.
+- Schema: `registry --agent` now preserves numeric `step` constraints from bridge schema responses.
+
+### Changed
+- Compatibility: Raised the minimum supported Workflow Bridge version to `1.2.0` so the skill aligns with typed asset fields and richer schema constraints.
+- Docs: Updated install, usage, and skill references to explain remote audio/video/file asset inputs and the guarded `file` upload boundary.
+
+### Fixed
+- Compatibility: Existing `config.json` files can no longer pin `min_bridge_version` below the skill's hard minimum; install/update now migrates stale values to `1.2.0`, and `doctor` reports the effective requirement.
+
 ## [1.2.4] - 2026-04-03
 ### Added
 - Reliability: Added stage-specific network settings `upload_timeout_ms`, `download_timeout_ms`, `network_retry_count`, and `retry_backoff_ms` for remote bridge transfers.
@@ -40,7 +51,6 @@
 
 - Added remote bridge auto-upload/download support and raised the minimum bridge requirement to `1.1.0`.
 - Added the manifest-driven `jmcai-release-manager` workflow for dual-repo release preparation and publish.
-- Added repo-local release manager wrappers so maintainers can trigger the same release flow from either repo.
 
 ## v1.0.0
 

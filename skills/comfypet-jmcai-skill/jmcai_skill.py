@@ -25,20 +25,31 @@ DEFAULT_CONFIG = {
     "download_timeout_ms": 120000,
     "network_retry_count": 1,
     "retry_backoff_ms": 1500,
-    "min_bridge_version": "1.1.0",
+    "min_bridge_version": "1.2.0",
 }
-ALLOWED_UPLOAD_EXTENSIONS = {
-    # Images
-    ".jpg", ".jpeg", ".png", ".webp", ".bmp",
-    # Videos
-    ".mp4", ".mov", ".avi", ".gif",
-    # Audio
-    ".wav", ".mp3", ".ogg", ".flac", ".m4a"
+IMAGE_UPLOAD_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
+VIDEO_UPLOAD_EXTENSIONS = {".mp4", ".mov", ".avi", ".gif", ".webm", ".mkv"}
+AUDIO_UPLOAD_EXTENSIONS = {".wav", ".mp3", ".ogg", ".flac", ".m4a", ".aac"}
+# Generic file uploads stay intentionally narrow so the skill does not become a
+# broad exfiltration primitive for arbitrary local configs or secrets.
+FILE_UPLOAD_EXTENSIONS = (
+    IMAGE_UPLOAD_EXTENSIONS
+    | VIDEO_UPLOAD_EXTENSIONS
+    | AUDIO_UPLOAD_EXTENSIONS
+    | {".txt", ".csv", ".tsv", ".pdf", ".srt", ".vtt", ".ass"}
+)
+ASSET_FIELD_UPLOAD_EXTENSIONS = {
+    "image": IMAGE_UPLOAD_EXTENSIONS,
+    "mask": IMAGE_UPLOAD_EXTENSIONS,
+    "video": VIDEO_UPLOAD_EXTENSIONS,
+    "audio": AUDIO_UPLOAD_EXTENSIONS,
+    "file": FILE_UPLOAD_EXTENSIONS,
 }
 
 # 智能路径寻址：确保加载 config.json 或资源文件时使用绝对路径
 SKILL_ROOT = Path(__file__).resolve().parent
 LOOPBACK_BRIDGE_HOSTS = {"127.0.0.1", "localhost", "::1"}
+CONFIG_WARNINGS_KEY = "__config_warnings__"
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -68,17 +79,84 @@ def load_config(explicit_path: str | None = None) -> dict[str, Any]:
     """解耦配置加载逻辑，支持无参调用（默认搜寻 SKILL_ROOT）"""
     config_path = Path(explicit_path).resolve() if explicit_path else SKILL_ROOT / "config.json"
     if config_path.exists():
-        with config_path.open("r", encoding="utf-8") as handle:
-            loaded = json.load(handle)
-            return {**DEFAULT_CONFIG, **loaded}
+        return load_config_file(config_path)
 
     example_path = SKILL_ROOT / "config.example.json"
     if example_path.exists():
-        with example_path.open("r", encoding="utf-8") as handle:
-            loaded = json.load(handle)
-            return {**DEFAULT_CONFIG, **loaded}
+        return load_config_file(example_path)
 
-    return dict(DEFAULT_CONFIG)
+    return normalize_config_payload({})
+
+
+def load_config_file(config_path: str | Path) -> dict[str, Any]:
+    path = Path(config_path).resolve()
+    with path.open("r", encoding="utf-8") as handle:
+        loaded = json.load(handle)
+    if not isinstance(loaded, dict):
+        raise ValueError(f"Config JSON must be an object: {path}")
+    return normalize_config_payload(loaded)
+
+
+def normalize_config_payload(loaded: dict[str, Any]) -> dict[str, Any]:
+    normalized = {**DEFAULT_CONFIG, **loaded}
+    min_bridge_version, config_warnings = resolve_min_bridge_version_config(loaded.get("min_bridge_version"))
+    normalized["min_bridge_version"] = min_bridge_version
+    normalized[CONFIG_WARNINGS_KEY] = config_warnings
+    return normalized
+
+
+def write_normalized_config_file(config_path: str | Path) -> dict[str, Any]:
+    path = Path(config_path).resolve()
+    if path.exists():
+        with path.open("r", encoding="utf-8") as handle:
+            loaded = json.load(handle)
+        if not isinstance(loaded, dict):
+            raise ValueError(f"Config JSON must be an object: {path}")
+    else:
+        loaded = {}
+
+    normalized = normalize_config_payload(loaded)
+    serialized = serialize_config_payload(normalized)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
+        json.dump(serialized, handle, ensure_ascii=False, indent=2)
+        handle.write("\n")
+    return serialized
+
+
+def serialize_config_payload(config: dict[str, Any]) -> dict[str, Any]:
+    return {key: value for key, value in config.items() if key != CONFIG_WARNINGS_KEY}
+
+
+def get_config_warnings(config: dict[str, Any]) -> list[str]:
+    value = config.get(CONFIG_WARNINGS_KEY)
+    if not isinstance(value, list):
+        return []
+    return [str(item) for item in value if isinstance(item, str) and item.strip()]
+
+
+def resolve_min_bridge_version_config(raw_value: Any) -> tuple[str, list[str]]:
+    hard_minimum = str(DEFAULT_CONFIG["min_bridge_version"])
+    if raw_value is None:
+        return hard_minimum, []
+
+    configured = str(raw_value).strip()
+    if not configured or not is_numeric_version(configured):
+        return (
+            hard_minimum,
+            [f"Configured min_bridge_version '{configured or raw_value}' is invalid; using hard minimum {hard_minimum} instead."],
+        )
+
+    if compare_versions(configured, hard_minimum) < 0:
+        return (
+            hard_minimum,
+            [
+                f"Configured min_bridge_version '{configured}' is lower than the hard minimum {hard_minimum}; "
+                f"using {hard_minimum} instead."
+            ],
+        )
+
+    return configured, []
 
 def registry() -> dict[str, Any]:
     """
@@ -225,7 +303,7 @@ def history_command(config: dict[str, Any], workflow_id: str, limit: int | None)
 
 def doctor_command(config: dict[str, Any]) -> dict[str, Any]:
     problems: list[str] = []
-    warnings: list[str] = []
+    warnings: list[str] = get_config_warnings(config)
 
     try:
         health = request_json(config, "GET", "/api/v1/health")
@@ -237,7 +315,7 @@ def doctor_command(config: dict[str, Any]) -> dict[str, Any]:
             "status": "error",
             "bridge_url": config["bridge_url"],
             "problems": [msg],
-            "warnings": [],
+            "warnings": warnings,
         }
 
     bridge_version = str(health.get("bridge_version", "0.0.0"))
@@ -325,6 +403,7 @@ def normalize_workflow(payload: dict[str, Any]) -> dict[str, Any]:
                 "choices": list(field.get("choices", [])),
                 "min": field.get("min"),
                 "max": field.get("max"),
+                "step": field.get("step"),
             }
         )
 
@@ -494,18 +573,20 @@ def prepare_run_args(
         return {"status": "error", "message": f"Workflow '{workflow_id}' not found in bridge registry."}
 
     schema = workflow.get("schema", [])
-    image_aliases = {
-        field.get("alias", "")
+    asset_aliases = {
+        field.get("alias", ""): normalize_asset_field_type(field.get("type"))
         for field in schema
-        if isinstance(field, dict) and field.get("type") == "image" and field.get("alias")
+        if isinstance(field, dict)
+        and field.get("alias")
+        and normalize_asset_field_type(field.get("type")) in ASSET_FIELD_UPLOAD_EXTENSIONS
     }
-    if not image_aliases:
+    if not asset_aliases:
         return {"status": "success", "args": parsed_args}
 
     uploaded_by_path: dict[str, str] = {}
     next_args = dict(parsed_args)
 
-    for alias in image_aliases:
+    for alias, field_type in asset_aliases.items():
         raw_value = next_args.get(alias)
         if not isinstance(raw_value, str):
             continue
@@ -513,10 +594,13 @@ def prepare_run_args(
         if not value or value.startswith("upload:") or not looks_like_absolute_path(value):
             continue
         if not os.path.exists(value):
-            return {"status": "error", "message": f"Image file does not exist on this machine: {value}"}
+            return {
+                "status": "error",
+                "message": f"{describe_asset_field_type(field_type)} does not exist on this machine: {value}",
+            }
         upload_token = uploaded_by_path.get(value)
         if not upload_token:
-            upload_result = upload_local_file(config, value)
+            upload_result = upload_local_file(config, value, field_type=field_type)
             if upload_result.get("status") == "error":
                 return upload_result
             upload_token = f"upload:{upload_result['upload_id']}"
@@ -526,16 +610,21 @@ def prepare_run_args(
     return {"status": "success", "args": next_args}
 
 
-def upload_local_file(config: dict[str, Any], local_path: str) -> dict[str, Any]:
+def upload_local_file(config: dict[str, Any], local_path: str, *, field_type: str = "file") -> dict[str, Any]:
     file_path = Path(local_path).resolve()
     if not file_path.exists():
         return {"status": "error", "message": f"Local file does not exist: {local_path}"}
 
     suffix = file_path.suffix.lower()
-    if suffix not in ALLOWED_UPLOAD_EXTENSIONS:
+    allowed_extensions = ASSET_FIELD_UPLOAD_EXTENSIONS.get(field_type, FILE_UPLOAD_EXTENSIONS)
+    if suffix not in allowed_extensions:
+        allowed_summary = ", ".join(sorted(allowed_extensions))
         return {
             "status": "error",
-            "message": f"File type '{suffix}' is not allowed for upload. Only media files (images, videos, audio) are supported for security reasons."
+            "message": (
+                f"File type '{suffix or '<none>'}' is not allowed for {describe_asset_field_type(field_type)}. "
+                f"Supported extensions: {allowed_summary}"
+            ),
         }
 
     mime_type = mimetypes.guess_type(file_path.name)[0]
@@ -828,6 +917,24 @@ def sanitize_file_name(file_name: str) -> str:
     return cleaned or "output.bin"
 
 
+def normalize_asset_field_type(value: Any) -> str:
+    if not isinstance(value, str):
+        return ""
+    return value.strip().lower()
+
+
+def describe_asset_field_type(field_type: str) -> str:
+    normalized = normalize_asset_field_type(field_type)
+    labels = {
+        "image": "Image file",
+        "mask": "Mask image file",
+        "video": "Video file",
+        "audio": "Audio file",
+        "file": "File input",
+    }
+    return labels.get(normalized, "File")
+
+
 def compare_versions(left: str, right: str) -> int:
     left_parts = [safe_int(part) for part in left.split(".")]
     right_parts = [safe_int(part) for part in right.split(".")]
@@ -842,6 +949,11 @@ def compare_versions(left: str, right: str) -> int:
             return 1
 
     return 0
+
+
+def is_numeric_version(value: str) -> bool:
+    parts = value.split(".")
+    return bool(parts) and all(part.isdigit() for part in parts)
 
 
 def safe_int(value: str) -> int:

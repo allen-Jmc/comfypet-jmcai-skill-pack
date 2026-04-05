@@ -65,6 +65,11 @@ if [[ -z "${python_bin}" ]]; then
   exit 1
 fi
 
+(
+  cd "${target_dir}"
+  "${python_bin}" -c "import jmcai_skill; jmcai_skill.write_normalized_config_file('config.json')"
+)
+
 if ! (
   cd "${target_dir}"
   "${python_bin}" jmcai_skill.py --config config.json doctor
