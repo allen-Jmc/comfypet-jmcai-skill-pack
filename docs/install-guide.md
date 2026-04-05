@@ -56,7 +56,7 @@ https://github.com/allen-Jmc/comfypet-jmcai-skill-pack/tree/main/skills/comfypet
 
 常用资产：
 
-- `comfypet-jmcai-skill-v1.2.4.zip`
+- `comfypet-jmcai-skill-v1.2.5.zip`
 - `checksums.txt`
 
 解压后请确认根目录直接包含 `SKILL.md`、`jmcai_skill.py`、`agents/`、`references/`、`assets/` 和 `config.example.json`。
@@ -123,7 +123,7 @@ python jmcai_skill.py --version
 期望返回：
 
 ```text
-jmcai-skill 1.2.4
+jmcai-skill 1.2.5
 ```
 
 ### 2. 验证 bridge

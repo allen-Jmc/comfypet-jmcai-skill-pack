@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v1.2.5
+
 ### Added
 - Runtime: Remote bridge auto-upload now covers `image`, `mask`, `video`, `audio`, and guarded `file` schema fields instead of only `image`.
 - Schema: `registry --agent` now preserves numeric `step` constraints from bridge schema responses.

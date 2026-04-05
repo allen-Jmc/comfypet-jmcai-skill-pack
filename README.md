@@ -95,7 +95,7 @@ clawhub install comfypet-jmcai-skill
 
 标准资产名称：
 
-- `comfypet-jmcai-skill-v1.2.4.zip`
+- `comfypet-jmcai-skill-v1.2.5.zip`
 - `checksums.txt`
 
 ## CLI
