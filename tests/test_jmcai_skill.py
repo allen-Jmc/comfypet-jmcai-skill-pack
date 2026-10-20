@@ -164,5 +164,36 @@ class JmcaiSkillConfigTests(unittest.TestCase):
         self.assertEqual(reloaded["min_bridge_version"], "1.2.0")
 
 
+class JmcaiSkillOutputTests(unittest.TestCase):
+    def test_normalize_run_preserves_structured_warnings(self) -> None:
+        result = jmcai_skill.normalize_run(
+            {
+                "id": "run-1",
+                "status": "success",
+                "outputs": [],
+                "warnings": [
+                    {
+                        "nodeId": "node-7",
+                        "field": "outputs",
+                        "stage": "download",
+                        "summary": "Download failed",
+                        "message": "Output could not be downloaded.",
+                        "retryable": True,
+                    },
+                    "legacy warning",
+                ],
+            }
+        )
+
+        self.assertEqual(result["warnings"][0]["nodeId"], "node-7")
+        self.assertEqual(result["warnings"][0]["stage"], "download")
+        self.assertTrue(result["warnings"][0]["retryable"])
+        self.assertEqual(result["warnings"][1], "legacy warning")
+
+    def test_infer_media_kind_recognizes_audio_outputs(self) -> None:
+        self.assertEqual(jmcai_skill.infer_media_kind("voice.m4a"), "audio")
+        self.assertEqual(jmcai_skill.infer_media_kind("voice.wav"), "audio")
+
+
 if __name__ == "__main__":
     unittest.main()

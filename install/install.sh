@@ -8,7 +8,7 @@ legacy_skill_name="jmcai-workflow-skill"
 payload_root="${repo_root}/skills/${skill_name}"
 
 if [[ -z "${agent}" ]]; then
-  echo "Usage: ./install/install.sh <codex|claude|openclaw> [repo_root]" >&2
+  echo "Usage: ./install/install.sh <codex|claude|openclaw|antigravity> [repo_root]" >&2
   exit 1
 fi
 
@@ -26,6 +26,9 @@ case "${agent}" in
     ;;
   openclaw)
     target_dir="${HOME}/.openclaw/workspace/skills/${skill_name}"
+    ;;
+  antigravity|gemini)
+    target_dir="${HOME}/.gemini/config/skills/${skill_name}"
     ;;
   *)
     echo "Unsupported agent: ${agent}" >&2
@@ -67,7 +70,8 @@ fi
 
 (
   cd "${target_dir}"
-  "${python_bin}" -c "import jmcai_skill; jmcai_skill.write_normalized_config_file('config.json')"
+  # 确保在任何 Python 环境下都能正确导入当前目录模块
+  "${python_bin}" -c "import os, sys; sys.path.insert(0, os.getcwd()); import jmcai_skill; jmcai_skill.write_normalized_config_file('config.json')"
 )
 
 if ! (

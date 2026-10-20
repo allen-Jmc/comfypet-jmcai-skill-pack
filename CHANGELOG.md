@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+- Compatibility: Preserve structured Workflow Bridge output warnings while continuing to accept legacy string warnings.
+- Compatibility: Infer `audio` output kinds from legacy output paths and document typed audio outputs for agents.
+
 ## v1.2.5
 
 ### Added

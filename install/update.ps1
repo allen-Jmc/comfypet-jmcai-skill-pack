@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet('codex', 'claude', 'openclaw')]
+    [ValidateSet('codex', 'claude', 'openclaw', 'antigravity', 'gemini')]
     [string]$Agent,
 
     [string]$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path

@@ -79,10 +79,12 @@ python jmcai_skill.py run --workflow smoke-workflow --args "{\"prompt_1\":\"a cl
 python jmcai_skill.py run --workflow smoke-video-workflow --args "{\"prompt_1\":\"a cinematic cat video\"}"
 ```
 
-图片 workflow 和视频 workflow 的调用形式相同，区别主要体现在：
+图片 workflow、视频 workflow 和音频 workflow 的调用形式相同，区别主要体现在：
 
 - `registry --agent` 返回的 `output_modalities`
 - `status` / `history` 返回的 `outputs[*].media_kind`
+
+音频输出的 `media_kind` 是 `audio`，音频文件仍会自动下载到当前机器。
 
 ## 5. 提交一次带音频或文件输入的 workflow
 
@@ -142,10 +144,10 @@ python jmcai_skill.py history --workflow smoke-workflow --limit 5
 字段含义：
 
 - `path`：当前执行 skill 这台机器上的本地绝对路径；远程 bridge 场景会先自动下载再返回
-- `media_kind`：`image | video | file`
+- `media_kind`：`image | video | audio | file`
 - `file_name`：文件名
 - `mime_type`：可选 MIME 类型
-- `warnings`：可选；当远程任务生成成功，但输出回传到本机失败时，会给出可执行告警
+- `warnings`：可选；当远程任务生成成功，但输出回传到本机失败时，会给出可执行告警。告警可能是字符串，也可能是包含 `field`、`stage`、`message` 等字段的结构化对象
 
 ## 参数使用规则
 

@@ -2,7 +2,7 @@
 
 ## 读者
 
-- 需要把 `JMCAI Comfypet Skill Pack` 安装到 OpenClaw、Codex 或 Claude Code 的使用者。
+- 需要把 `JMCAI Comfypet Skill Pack` 安装到 Antigravity、OpenClaw、Codex 或 Claude Code 的使用者。
 
 ## 用途
 
@@ -30,6 +30,7 @@
 
 ## 默认安装目录
 
+- Antigravity：`~/.gemini/config/skills/comfypet-jmcai-skill`
 - Codex：`~/.codex/skills/comfypet-jmcai-skill`
 - Claude Code：`~/.claude/skills/comfypet-jmcai-skill`
 - OpenClaw：`~/.openclaw/workspace/skills/comfypet-jmcai-skill`
@@ -76,6 +77,7 @@ clawhub install comfypet-jmcai-skill
 在仓库根目录执行：
 
 ```powershell
+pwsh -File .\install\install.ps1 -Agent antigravity
 pwsh -File .\install\install.ps1 -Agent codex
 pwsh -File .\install\install.ps1 -Agent claude
 pwsh -File .\install\install.ps1 -Agent openclaw
@@ -84,6 +86,7 @@ pwsh -File .\install\install.ps1 -Agent openclaw
 ### macOS / Linux
 
 ```bash
+./install/install.sh antigravity
 ./install/install.sh codex
 ./install/install.sh claude
 ./install/install.sh openclaw

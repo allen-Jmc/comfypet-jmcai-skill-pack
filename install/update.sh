@@ -5,7 +5,7 @@ agent="${1:-}"
 repo_root="${2:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 
 if [[ -z "${agent}" ]]; then
-  echo "Usage: ./install/update.sh <codex|claude|openclaw> [repo_root]" >&2
+  echo "Usage: ./install/update.sh <codex|claude|openclaw|antigravity> [repo_root]" >&2
   exit 1
 fi
 

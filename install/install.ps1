@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet('codex', 'claude', 'openclaw')]
+    [ValidateSet('codex', 'claude', 'openclaw', 'antigravity', 'gemini')]
     [string]$Agent,
 
     [string]$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
@@ -23,11 +23,22 @@ function Get-TargetDir {
         'codex' { return Join-Path $HOME ".codex\skills\$skillName" }
         'claude' { return Join-Path $HOME ".claude\skills\$skillName" }
         'openclaw' { return Join-Path $HOME ".openclaw\workspace\skills\$skillName" }
+        'antigravity' { return Join-Path $HOME ".gemini\config\skills\$skillName" }
+        'gemini' { return Join-Path $HOME ".gemini\config\skills\$skillName" }
         default { throw "Unsupported agent: $SelectedAgent" }
     }
 }
 
 function Resolve-PythonCommand {
+    # 优先检测并使用 uv 管理与执行环境
+    if (Get-Command uv -ErrorAction SilentlyContinue) {
+        return [PSCustomObject]@{
+            Executable = 'uv'
+            Arguments  = @('run', 'python')
+        }
+    }
+
+    # 其次检测标准 python
     if (Get-Command python -ErrorAction SilentlyContinue) {
         return [PSCustomObject]@{
             Executable = 'python'
@@ -35,6 +46,7 @@ function Resolve-PythonCommand {
         }
     }
 
+    # 兼容 Windows py 启动器
     if (Get-Command py -ErrorAction SilentlyContinue) {
         return [PSCustomObject]@{
             Executable = 'py'
@@ -82,7 +94,8 @@ if ($backupConfig) {
 $pythonCommand = Resolve-PythonCommand
 $pythonExe = $pythonCommand.Executable
 $normalizeArgs = @($pythonCommand.Arguments)
-$normalizeArgs += @('-c', "import jmcai_skill; jmcai_skill.write_normalized_config_file('config.json')")
+# 确保在任何 Python 环境（包括嵌入式 Python）下都能正确加载当前目录的模块
+$normalizeArgs += @('-c', "import os, sys; sys.path.insert(0, os.getcwd()); import jmcai_skill; jmcai_skill.write_normalized_config_file('config.json')")
 $doctorArgs = @($pythonCommand.Arguments)
 $doctorArgs += @('jmcai_skill.py', '--config', 'config.json', 'doctor')
 

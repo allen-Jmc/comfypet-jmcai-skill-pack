@@ -66,6 +66,7 @@ https://github.com/allen-Jmc/comfypet-jmcai-skill-pack/tree/main/skills/comfypet
 Windows：
 
 ```powershell
+pwsh -File .\install\install.ps1 -Agent antigravity
 pwsh -File .\install\install.ps1 -Agent codex
 pwsh -File .\install\install.ps1 -Agent claude
 pwsh -File .\install\install.ps1 -Agent openclaw
@@ -74,6 +75,7 @@ pwsh -File .\install\install.ps1 -Agent openclaw
 macOS / Linux：
 
 ```bash
+./install/install.sh antigravity
 ./install/install.sh codex
 ./install/install.sh claude
 ./install/install.sh openclaw
@@ -115,6 +117,7 @@ CLI 输出始终为机器可读 JSON，字段统一为 `snake_case`。
 
 ## 默认安装目录
 
+- Antigravity：`~/.gemini/config/skills/comfypet-jmcai-skill`
 - Codex：`~/.codex/skills/comfypet-jmcai-skill`
 - Claude Code：`~/.claude/skills/comfypet-jmcai-skill`
 - OpenClaw：`~/.openclaw/workspace/skills/comfypet-jmcai-skill`
@@ -141,4 +144,4 @@ macOS / Linux：
 - `doctor` 失败：先确认桌面端已启动，并检查 Workflow Bridge 是否可达
 - `python jmcai_skill.py` 不可用：确认是在 skill 安装目录内执行，且使用 Python 3
 - 看不到 workflow：确认 workflow 已启用，且默认 target 当前可用
-- 图片、视频或资产输入任务失败：优先看 `status` 或 `history` 返回的 `error_message`
+- 图片、视频、音频或资产输入任务失败：优先看 `status` 或 `history` 返回的 `error_message`；任务成功但输出下载失败时查看 `warnings`
